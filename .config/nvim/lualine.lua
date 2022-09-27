@@ -79,7 +79,7 @@ require('lualine').setup {
 				}
 			end
 		}, 'diagnostics', 'filename', 'overseer'},
-		lualine_x = {{ filesize }, 'fileformat', 'filetype'},
+		lualine_x = { { filesize }, 'fileformat', 'filetype'},
 		lualine_y = {'progress'},
 		lualine_z = {'location'}
 	},

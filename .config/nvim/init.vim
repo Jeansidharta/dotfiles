@@ -17,7 +17,6 @@ match UnwantedSpaces /\s\+$/
 source ~/.config/nvim/coq.lua
 source ~/.config/nvim/colorizer.lua
 source ~/.config/nvim/telescope.lua
-source ~/.config/nvim/neoformat.lua
 source ~/.config/nvim/treesitter.lua
 source ~/.config/nvim/notify.lua
 source ~/.config/nvim/lsp.lua
@@ -25,7 +24,18 @@ source ~/.config/nvim/lsp_lines.lua
 source ~/.config/nvim/lualine.lua
 source ~/.config/nvim/gitsigns.lua
 source ~/.config/nvim/dressing.lua
-source ~/.config/nvim/easy-motions.vim
+source ~/.config/nvim/hop.lua
 source ~/.config/nvim/quickscope.vim
 source ~/.config/nvim/overseer.lua
+source ~/.config/nvim/fidget.lua
+source ~/.config/nvim/nvim-surround.lua
+source ~/.config/nvim/neoclip.lua
+source ~/.config/nvim/shade.lua
+source ~/.config/nvim/range-highlight.lua
+source ~/.config/nvim/fterm.lua
+source ~/.config/nvim/git-conflict.lua
+source ~/.config/nvim/neoscroll.lua
+source ~/.config/nvim/marks.lua
+source ~/.config/nvim/comment.lua
+source ~/.config/nvim/lsp-format.lua
 

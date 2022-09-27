@@ -1,0 +1,18 @@
+#!/usr/bin/bash
+
+# Expected first argument: "monocle" | "fullscreen"
+
+# If the user is in monocle mode or in fullscreen mode, go back to tiled mode.
+# Otherwise, go to monocle/fullscreen mode, as specified by the first argument.
+
+if bspc query -T --desktop focused | grep "$(echo -e "monocle\n\"state\":\"fullscreen\"")" > /dev/null; then
+	echo "Fullscreen\Monocle"
+	bspc desktop --layout tiled
+	bspc node --state tiled
+else
+	if [[ "$1" == "monocle" ]]; then
+		bspc desktop --layout monocle
+	else
+		bspc node --state fullscreen
+	fi
+fi

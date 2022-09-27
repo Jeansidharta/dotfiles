@@ -1,0 +1,7 @@
+#!/bin/bash
+
+exec 2>&1
+
+echo "Polybar started" 
+
+exec polybar

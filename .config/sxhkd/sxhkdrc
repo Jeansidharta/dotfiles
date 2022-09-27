@@ -1,0 +1,130 @@
+
+#
+# wm independent hotkeys
+#
+
+# Program Launcher
+alt + space
+	/home/sidharta/scripts/dmenu/select-mode
+
+# terminal emulator
+alt + Return
+	st
+
+# Clipboard manager
+# ctrl + alt + v
+	# CM_LAUNCHER=rofi clipmenu
+
+# Screenshoting
+ctrl + F1
+	flameshot gui
+
+ctrl + shift + F1
+	peek
+
+# Audio Control
+XF86AudioPlay
+	playerctl play-pause
+shift + XF86AudioPlay
+	mpc toggle
+XF86AudioPrev
+	playerctl previous
+shift + XF86AudioPrev
+	mpc prev
+XF86AudioNext
+	playerctl next
+shift + XF86AudioNext
+	mpc next
+XF86AudioLowerVolume
+	amixer set PCM 10%-
+XF86AudioRaiseVolume
+	amixer set PCM 10%+
+XF86AudioMute
+	amixer set PCM toggle
+
+alt + control + 1
+	/home/sidharta/bin/xmenu/general-menu.sh
+alt + control + 2
+	/home/sidharta/bin/xmenu/systemd-menu.sh
+alt + control + Escape
+	kill -s USR1 $(pidof deadd-notification-center)
+
+#
+# state/flags
+#
+
+# focus the node in the given direction
+alt + {a,s,w,d}
+	/home/sidharta/.config/bspwm/scripts/focus-monocle-aware {west,south,north,east}
+	# bspc node --focus
+alt + shift + {a,s,w,d}
+	bspc node --swap {west,south,north,east}
+
+# focus or send to the given desktop
+alt + {1-9,0}
+	bspc desktop --focus '^{1-9,10}'
+alt + shift + {1-9,0}
+	bspc node --to-desktop '^{1-9,10}'
+
+# close and kill
+alt + F4
+	bspc node --close
+alt + shift + F4
+	bspc node --kill
+
+# Toggle Fullscreen
+alt + f
+	/home/sidharta/.config/bspwm/scripts/toggle-fullscreen-monocle monocle
+alt + shift + f
+	bspc node --state \~fullscreen
+alt + t
+	bspc node --state tiled
+alt + shift + t
+	bspc node --state \~pseudo_tiled
+
+# Parent Actions
+alt + p
+	bspc node --focus @parent
+alt + shift + p
+	bspc node --swap @parent/brother
+
+# Brother Actions
+alt + b
+	bspc node --focus @brother
+alt + shift + b
+	bspc node --swap @brother
+
+# Rotation Actions
+alt + r
+	bspc node @parent --rotate 90
+alt + shift + r
+	bspc node @parent --rotate 270
+
+# Ratio Actions
+alt + {_,shift +} minus
+	bspc node @parent --ratio +{5,0.1}
+alt + {_,shift +} equal
+	bspc node @parent --ratio -{5,0.1}
+alt + bracketleft
+	bspc node @parent --balance
+
+# Preselection actions
+alt + ctrl + {a,w,s,d}
+	bspc node --presel-dir \~{west,north,south,east}
+alt + q
+	bspc node --to-node last.!automatic
+
+# Pointer actions
+alt + b
+alt + space
+	/home/sidharta/.config/bspwm/scripts/toggle-borders
+
+# Floating thing
+alt + shift + comma
+	bspc node --state \~floating
+alt + comma
+	bspc node --focus any.floating.!focused
+alt + {j, i, k, l}
+	bspc node -v {-10 0, 0 -10, 0 10, 10 0 }
+alt + shift + {j, i, k, l}
+	bspc node -v {-300 0, 0 -300, 0 300, 300 0 }

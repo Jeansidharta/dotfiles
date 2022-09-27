@@ -1,0 +1,7 @@
+[user]
+	email = jeansidharta@gmail.com
+	name = Jean Sidharta
+[core]
+	autocrlf = input
+[init]
+	defaultBranch = main

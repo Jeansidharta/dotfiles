@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Toggles border gaps, for better space usage
+
+if [[ `bspc config window_gap` == 0 ]]
+then
+	bspc config window_gap 30
+else
+	bspc config window_gap 0
+fi

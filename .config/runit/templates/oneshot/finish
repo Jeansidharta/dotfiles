@@ -1,0 +1,11 @@
+#!/bin/bash
+
+exec 2>&1
+
+# Read config file
+test -x ./config && . ./config
+
+echo "$SERVICE_NAME finished!"
+
+echo "d" > supervise/control
+

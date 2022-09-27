@@ -1,0 +1,17 @@
+[Default Applications]
+x-scheme-handler/tg=userapp-Telegram Desktop-U98KQ1.desktop
+text/html=firefox.desktop
+text/xml=firefox.desktop
+text/=firefox.desktop
+text/asd=firefox.desktop
+text/mml=firefox.desktop
+text/*=firefox.desktop
+x-scheme-handler/http=firefox.desktop
+x-scheme-handler/https=firefox.desktop
+x-scheme-handler/about=firefox.desktop
+x-scheme-handler/unknown=firefox.desktop
+x-scheme-handler/eclipse+command=_usr_lib_dbeaver_.desktop
+x-scheme-handler/nxm=modorganizer2-nxm-handler.desktop
+
+[Added Associations]
+x-scheme-handler/tg=userapp-Telegram Desktop-U98KQ1.desktop;

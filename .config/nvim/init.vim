@@ -5,7 +5,8 @@ source ~/.config/nvim/packer.lua
 
 let mapleader=" "
 
-colorscheme codedark
+" colorscheme codedark
+colorscheme tokyodark
 
 nnoremap <leader>, :source ~/.config/nvim/init.vim<CR>
 nnoremap <leader>. :vsplit ~/.config/nvim/init.vim<CR>

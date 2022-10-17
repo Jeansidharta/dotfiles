@@ -1,1 +1,3 @@
 SERVICE_NAME="Plex Media Server"
+PLEX_HOME=/home/sidharta/.plex/home
+PLEX_DATA=/home/sidharta/.plex/data

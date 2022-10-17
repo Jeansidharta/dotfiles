@@ -1,0 +1,46 @@
+#!/bin/bash
+
+case $1 in
+	service)
+		SERVICE_FOLDER=/var/service
+	;;
+	x)
+		SERVICE_FOLDER=$XDG_CONFIG_HOME/runit/onXSession
+	;;
+	boot)
+		SERVICE_FOLDER=$XDG_CONFIG_HOME/runit/onBoot
+	;;
+	login)
+		SERVICE_FOLDER=$XDG_CONFIG_HOME/runit/onLogin
+	;;
+	demand)
+		SERVICE_FOLDER=$XDG_CONFIG_HOME/runit/onDemand
+	;;
+	predify-root)
+		SERVICE_FOLDER=$XDG_CONFIG_HOME/runit/onDemandPredifyRoot
+	;;
+	*)
+		echo -e "Only supported options are:\n\t- service\n\t- x\n\t- boot\n\t- login\n\t- demand\n\t- predify-root"
+	;;
+esac
+
+if [[ -z "$2" ]]; then
+	echo "You must provide a service name as first argument"
+	exit -1
+fi
+
+
+SERVICE_PATH=$SERVICE_FOLDER/$2
+
+if [[ ! -L "$SERVICE_PATH" ]]; then
+	echo "Service does not exist, or is not a simbolic link!"
+	exit -1
+fi
+
+if [ "$1" = "service" ] || [ "$1" = "predify-root" ]; then
+	COMMAND="sudo rm"
+else
+	COMMAND="rm"
+fi
+
+$COMMAND $SERVICE_PATH

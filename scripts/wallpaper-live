@@ -1,0 +1,11 @@
+#!/usr/bin/bash
+
+WALLPAPER_DIR=$HOME/Wallpapers/live
+WALLPAPER_PATH=$1
+if [ -z $WALLPAPER_PATH ]; then
+	WALLPAPER_PATH=$(find $WALLPAPER_DIR -type f -name "*.mp4" -or -name "*.mkv" | shuf -n 1)
+fi
+
+echo "Setting wallpaper $WALLPAPER_PATH"
+
+exec set-wallpaper $WALLPAPER_PATH

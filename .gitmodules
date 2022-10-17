@@ -1,0 +1,3 @@
+[submodule "scripts/scripts/wallpapger-manager"]
+	path = scripts/scripts/wallpapger-manager
+	url = https://github.com/Jeansidharta/wallpaper-manager

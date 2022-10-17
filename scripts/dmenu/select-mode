@@ -1,0 +1,9 @@
+#!/usr/bin/bash
+
+SCRIPTS_DIR=/home/sidharta/scripts/dmenu/
+
+MODE=$(ls $SCRIPTS_DIR -1 | dmenu -l 10)
+if [[ -z "$MODE" ]]; then
+	exit -1;
+fi
+exec "$SCRIPTS_DIR/$MODE"

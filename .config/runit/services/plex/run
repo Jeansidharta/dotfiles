@@ -7,7 +7,7 @@ test -x ./config && . ./config
 
 echo "$SERVICE_NAME started" 
 
-cd /opt/plex/src/active/root/usr/lib/plexmediaserver || exit 1
-export PLEX_MEDIA_SERVER_HOME=/opt/plex/src/active/root/usr/lib/plexmediaserver
-export PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR=/opt/plex/data
+cd $PLEX_HOME || exit 1
+export PLEX_MEDIA_SERVER_HOME=$PLEX_HOME
+export PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR=$PLEX_DATA
 exec ./Plex\ Media\ Server

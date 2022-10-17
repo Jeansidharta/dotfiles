@@ -1,0 +1,38 @@
+#!/usr/bin/bash
+
+ENTRIES_DIR=/home/sidharta/desktop-entries
+
+function parseFile () {
+	DOC_PROPS=$(cat $1 | grep -E "Name|Comment|Exec")
+	while IFS="=" read -r prop value; do
+		case $prop in
+			Name)
+				NAME_STR="$value"
+				;;
+			Comment)
+				COMMENT_STR="$value"
+				;;
+			# Exec)
+				# EXEC_STR="$value"
+				# ;;
+		esac
+	done <<< "$DOC_PROPS"
+	echo -e "$NAME_STR\t$COMMENT_STR\t> $1"
+}
+
+SELECTED_ENTRY=$(ls -1 $ENTRIES_DIR | while IFS=\n read line; do
+	parseFile "$ENTRIES_DIR/$line"
+done | column -t -s $'\t' --table-columns "Name,Desc,Entry" | dmenu -l 10)
+
+if [[ -z "$SELECTED_ENTRY" ]]; then
+	exit -1
+fi
+
+EXEC=$(echo $SELECTED_ENTRY | grep -Eo ">.+$" | cut --bytes=2-)
+
+if [[ -z "$EXEC" ]]; then
+	exit -1
+fi
+
+dex $EXEC
+

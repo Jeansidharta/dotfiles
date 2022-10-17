@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Verion=1.0
+Name=VSCode
+Comment=VSCode
+Exec=/home/sidharta/programs/VSCode-linux-x64/code

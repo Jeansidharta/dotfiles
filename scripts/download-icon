@@ -1,0 +1,40 @@
+#!/usr/bin/zx
+
+import { URL } from "url";
+
+let help = argv.h || argv.help;
+let [url] = argv._;
+
+if (help || !url) {
+  const processName = process.argv[2].split("/").at(-1);
+  console.log(
+    `Usage: ${processName} [-n|--filename FILE_NAME] [-h|--help] IMAGE_URL`
+  );
+  process.exit(help ? 0 : 1);
+}
+
+const urlFileName = new URL(url).pathname.split("/").at(-1);
+let filename = argv.n || argv.filename || urlFileName;
+const getFileType = (name) => name.split(".")[1];
+
+const filenameType = getFileType(filename);
+const urlFilenameType = getFileType(urlFileName);
+
+if (!filenameType && urlFilenameType) {
+  filename += `.${urlFilenameType}`;
+} else if (filenameType !== urlFilenameType) {
+  let response = await question(
+    `Specified extension .${filenameType} is different from URL .${urlFilenameType}. Do you want to continue? (y,n) `
+  );
+  response = response.toLowerCase();
+  if (response !== "y" && response !== "yes") {
+    console.log("Exiting...");
+    process.exit(0);
+  }
+}
+
+await fetch(url)
+  .then((res) => res.text())
+  .then((text) =>
+    fs.outputFile(path.join(process.env.HOME, "/images/icons/", filename), text)
+  );

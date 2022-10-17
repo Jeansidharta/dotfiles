@@ -1,0 +1,8 @@
+#!/usr/bin/bash
+
+WALLPAPER_DIR=$HOME/Wallpapers/static
+WALLPAPER_PATH=`find $WALLPAPER_DIR -type f -name "*.jpg" -or -name "*.png" | shuf -n 1`
+
+echo "Setting wallpaper $WALLPAPER_PATH"
+
+feh --bg-center $WALLPAPER_PATH

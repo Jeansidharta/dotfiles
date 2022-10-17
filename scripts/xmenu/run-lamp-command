@@ -1,0 +1,3 @@
+	curl https://casa.sidharta.xyz/api/lamp/lamp/rawmethod \
+	--json "{ \"targets\": $1, \"method\": \"$2\", \"args\": $3  }" \
+	-s > /dev/null

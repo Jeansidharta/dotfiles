@@ -31,7 +31,7 @@ source ~/.config/nvim/overseer.lua
 source ~/.config/nvim/fidget.lua
 source ~/.config/nvim/nvim-surround.lua
 source ~/.config/nvim/neoclip.lua
-source ~/.config/nvim/shade.lua
+" source ~/.config/nvim/shade.lua
 source ~/.config/nvim/range-highlight.lua
 source ~/.config/nvim/fterm.lua
 source ~/.config/nvim/git-conflict.lua

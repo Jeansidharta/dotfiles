@@ -1,4 +1,4 @@
-set POSSIBLE_CONTEXTS "service x boot start demand predify-root"
+set POSSIBLE_CONTEXTS "service x boot login demand predify-root"
 
 function getServices;
 	set -l CONTEXT $(__fish_nth_token 1)
@@ -8,8 +8,8 @@ function getServices;
 			set SERVICE_PATH "$XDG_CONFIG_HOME/runit/onXSession/"
 		case "boot"
 			set SERVICE_PATH "$XDG_CONFIG_HOME/runit/onBoot/"
-		case "start"
-			set SERVICE_PATH "$XDG_CONFIG_HOME/runit/onStart/"
+		case "login"
+			set SERVICE_PATH "$XDG_CONFIG_HOME/runit/onLogin/"
 		case "demand"
 			set SERVICE_PATH "$XDG_CONFIG_HOME/runit/onDemand/"
 		case "predify-root"

@@ -1,0 +1,70 @@
+#!/usr/bin/zx
+
+if (argv.h || argv.help) {
+  console.log(`
+Usage: download-music [--options] URL
+
+Any required but unspecified option will be asked in the terminal.
+
+Options:
+	--track-name - Required
+	--artist - Required
+	--genre - Required
+	--album - Required
+`);
+  process.exit(0);
+}
+
+let url = argv._[0] || (await question("Youtube URL: ")).trim();
+await $`youtube-dl ${url} -F`;
+
+let format = (await question("Choose Format: ")).trim();
+
+const trackName = argv["track-name"] || (await question("Track Name: ")).trim();
+const artistsRaw =
+  argv["artist"] ||
+  (await question('Artists (separate them by a "|" character): ')).trim();
+const genreRaw =
+  argv["genre"] ||
+  (await question('Genre (separate them by a "|" character): ')).trim();
+const album = argv["album"] || (await question("Album: ")).trim();
+
+const artists = artistsRaw.split("|").map((artist) => artist.trim());
+const artistsString = artists.join("|");
+const genres = genreRaw.split("|").map((genre) => genre.trim());
+const genresString = genres.join("|");
+
+const filename = `${artists.join(" & ")} - ${trackName}`;
+const filenameM4A = `${filename}.m4a`;
+const filenameMP3 = `${filename}.mp3`;
+
+console.log("Downloading with filename", filenameM4A);
+
+await $`youtube-dl ${url} -f ${format} -o ${filenameM4A}`;
+console.log('Calculating Beats/Minute...')
+const bpm = await $`sox ${filenameM4A} -t raw -r 44100 -e float -c 1 - | bpm`;
+console.log('BPM is ${bpm}')
+console.log('Adding Metadata...')
+await $`ffmpeg -i ${filenameM4A} ${[
+  album ? ["-metadata", `Album=${album}`] : [],
+  trackName ? ["-metadata", `Title=${trackName}`] : [],
+  artistsString ? ["-metadata", `Artist=${artistsString}`] : [],
+  genresString ? ["-metadata", `Genre=${genresString}`] : [],
+  genresString ? ["-metadata", `Download URL=${url}`] : [],
+  genresString ? ["-metadata", `BPM=${bpm}`] : [],
+].flat()} ${filenameMP3}`;
+
+console.log('Calculating Replay Gain...')
+
+await $`r128gain ${filenameMP3}`;
+
+console.log('Removing Downloaded file...')
+await $`rm ${filenameM4A}`;
+
+const moveToMusic = (await question("Move to musics folder? (y,n): "))
+  .trim()
+  .toLowerCase();
+
+if (moveToMusic === "y" || moveToMusic === "yes") {
+  await $`mv ${filenameMP3} ~/music`;
+}

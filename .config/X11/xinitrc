@@ -1,0 +1,6 @@
+runsvdir /home/sidharta/.config/runit/onXSession &
+
+setxkbmap -layout us -variant intl
+xrdb -merge "/home/sidharta/.config/X11/xresources"
+
+exec dbus-run-session bspwm

@@ -1,4 +1,4 @@
-set POSSIBLE_CONTEXTS "service x boot start demand predify-root"
+set POSSIBLE_CONTEXTS "service x boot login demand predify-root"
 
 function getServices;
 	if commandline -pc | grep "service"

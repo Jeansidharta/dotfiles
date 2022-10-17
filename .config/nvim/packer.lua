@@ -14,7 +14,6 @@ return require('packer').startup(function(use)
 		run = ':TSUpdate'
 	}
 	use { 'rcarriga/nvim-notify' }
-	use { 'easymotion/vim-easymotion' }
 	-- use { "rebelot/heirline.nvim" }
 	use 'neovim/nvim-lspconfig'
 	use({

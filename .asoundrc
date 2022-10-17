@@ -1,0 +1,27 @@
+# defaults.ctl.!card "PCH"
+defaults.pcm.!card "PCH"
+defaults.pcm.device 0
+# defaults.pcm.dmix.!card 1
+# defaults.pcm.dmix.!device 0
+defaults.ctl.card 1
+
+# pcm_slave.webcam {
+# 	pcm {
+# 		card 0
+# 		device 0
+# 	}
+# 	channels 1
+# 	rate 16000
+# }
+# #
+# pcm.!default {
+#     type asym
+#     playback.pcm {
+#         type plug
+#         slave.pcm "dmix"
+#     }
+#     capture.pcm {
+#         type plug
+#         slave "webcam"
+#     }
+# }

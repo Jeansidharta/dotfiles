@@ -1,5 +1,4 @@
 local coq = require("coq")
-local lsp_format = require("lsp-format")
 
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -14,12 +13,6 @@ vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 local on_attach = function(client, bufnr)
 	-- Enable completion triggered by <c-x><c-o>
 	vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-	-- Force vuels to be able to format
-	if client.name == "vuels" then
-		client.resolved_capabilities.document_formatting = true
-		print(vim.inspect(client))
-	end
-	lsp_format.on_attach(client)
 
 	-- Mappings.
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -45,49 +38,13 @@ local lsp_flags = {
 	-- This is the default in Nvim 0.7+
 	debounce_text_changes = 150,
 }
-require('lspconfig')['pyright'].setup(coq.lsp_ensure_capabilities({
-	on_attach = on_attach,
-	flags = lsp_flags,
-}))
-require('lspconfig')['tsserver'].setup(coq.lsp_ensure_capabilities({
-	on_attach = on_attach,
-	flags = lsp_flags,
-}))
-require('lspconfig')['rust_analyzer'].setup(coq.lsp_ensure_capabilities({
-	on_attach = on_attach,
-	flags = lsp_flags,
-	-- Server-specific settings...
-	settings = {
-		["rust-analyzer"] = {}
-	}
-}))
-
-require('lspconfig').vuels.setup(coq.lsp_ensure_capabilities({
-	on_attach = on_attach,
-	flags = lsp_flags,
-	config = {
-		vetur = {
-			format = {
-				enabled = true,
-				defaultFormatter = {
-					html = "prettier",
-					pug = "prettier",
-					css = "prettier",
-					postcss = "prettier",
-					scss = "prettier",
-					less = "prettier",
-					stylus = "prettier",
-					js = "prettier",
-					ts = "prettier",
-					sass = "prettier"
-				},
-			}
-		}
-	}
-}))
+require('lspconfig')['pyright'].setup(coq.lsp_ensure_capabilities({ on_attach = on_attach, flags = lsp_flags }))
+require('lspconfig')['tsserver'].setup(coq.lsp_ensure_capabilities({ on_attach = on_attach, flags = lsp_flags }))
+require('lspconfig')['rust_analyzer'].setup(coq.lsp_ensure_capabilities({ on_attach = on_attach, flags = lsp_flags }))
+require('lspconfig').vuels.setup(coq.lsp_ensure_capabilities({ on_attach = on_attach, flags = lsp_flags }))
 
 -- This will be the path towards your sumneko folder. This is subjective
-local sumneko_root_path = os.getenv("HOME") .. "/programs/lua-language-server"
+local sumneko_root_path = "/home/sidharta/git/lua-language-server"
 local sumneko_binary = sumneko_root_path .. "/bin/lua-language-server"
 require 'lspconfig'.sumneko_lua.setup(coq.lsp_ensure_capabilities({
 	cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },

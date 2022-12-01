@@ -26,7 +26,6 @@ source ~/.config/nvim/lualine.lua
 source ~/.config/nvim/gitsigns.lua
 source ~/.config/nvim/dressing.lua
 source ~/.config/nvim/hop.lua
-source ~/.config/nvim/quickscope.vim
 source ~/.config/nvim/overseer.lua
 source ~/.config/nvim/fidget.lua
 source ~/.config/nvim/nvim-surround.lua
@@ -38,5 +37,8 @@ source ~/.config/nvim/git-conflict.lua
 source ~/.config/nvim/neoscroll.lua
 source ~/.config/nvim/marks.lua
 source ~/.config/nvim/comment.lua
-source ~/.config/nvim/lsp-format.lua
+" source ~/.config/nvim/lsp-format.lua
+source ~/.config/nvim/formatter.lua
+source ~/.config/nvim/rest.lua
+source ~/.config/nvim/duck.lua
 

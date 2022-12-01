@@ -1,5 +1,5 @@
 [Default Applications]
-x-scheme-handler/tg=userapp-Telegram Desktop-U98KQ1.desktop
+x-scheme-handler/tg=userapp-Telegram Desktop-N10CW1.desktop
 text/html=firefox.desktop
 text/xml=firefox.desktop
 text/=firefox.desktop
@@ -14,4 +14,4 @@ x-scheme-handler/eclipse+command=_usr_lib_dbeaver_.desktop
 x-scheme-handler/nxm=modorganizer2-nxm-handler.desktop
 
 [Added Associations]
-x-scheme-handler/tg=userapp-Telegram Desktop-U98KQ1.desktop;
+x-scheme-handler/tg=userapp-Telegram Desktop-U98KQ1.desktop;userapp-Telegram Desktop-D0QOT1.desktop;userapp-Telegram Desktop-N10CW1.desktop;

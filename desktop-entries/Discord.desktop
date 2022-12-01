@@ -3,4 +3,4 @@ Type=Application
 Verion=1.0
 Name=Discord
 Comment=Discord
-Exec=/home/sidharta/bin/Discord
+Exec=/usr/bin/discord

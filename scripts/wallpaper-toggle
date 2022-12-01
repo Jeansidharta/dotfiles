@@ -1,0 +1,11 @@
+#!/bin/sh
+
+PROCESS_STATE=$(ps -q $(systemctl --user show wallpaper-manager.service --property MainPID --value) -o state --no-headers)
+
+if [ "$PROCESS_STATE" = "T" ]; then
+	SIGNAL="CONT"
+else
+	SIGNAL="STOP"
+fi
+
+systemctl --user kill wallpaper-manager.service -s $SIGNAL --kill-who all

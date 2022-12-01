@@ -1,0 +1,14 @@
+[Unit]
+Description=Simple X Hotkey Daemon
+Documentation=man:sxhkd(1)
+
+[Service]
+Restart=always
+RestartSec=0.5
+EnvironmentFile=/home/sidharta/.config/systemd/env
+ExecStart=/usr/bin/sxhkd
+ExecReload=/usr/bin/kill -SIGUSR1 $MAINPID
+KillMode=process
+
+[Install]
+WantedBy=xsession.target

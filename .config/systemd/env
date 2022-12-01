@@ -1,0 +1,16 @@
+PATH=/home/sidharta/go/bin:/home/sidharta/.npm/global/bin:/home/sidharta/.cargo/bin:/home/sidharta/scripts:/home/sidharta/bin:/usr/local/bin:/usr/bin
+USER=sidharta
+XDG_STATE_HOME=/home/sidharta/.local/state
+XDG_CONFIG_HOME=/home/sidharta/.config
+LANG=en_US.UTF-8
+XDG_RUNTIME_DIR=/home/sidharta/.local/run
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+HOME=/home/sidharta
+TERM=st-256color
+DISPLAY=:0
+MAIL=/var/spool/mail/sidharta
+XDG_DATA_HOME=/home/sidharta/.local/share
+XDG_DOWNLOAD_DIR=/home/sidharta/Downloads
+LOGNAME=sidharta
+XDG_CACHE_HOME=/home/sidharta/.cache
+SHLVL=1

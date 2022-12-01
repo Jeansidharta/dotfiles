@@ -1,0 +1,12 @@
+[Unit]
+Description=Wallpaper Manager
+After=polybar.service
+
+[Service]
+ExecStartPre=/bin/sleep 2
+ExecStart=/home/sidharta/.cargo/bin/wallpaper-manager daemon
+EnvironmentFile=/home/sidharta/.config/systemd/env
+KillMode=process
+
+[Install]
+WantedBy=xsession.target

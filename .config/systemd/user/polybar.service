@@ -1,0 +1,11 @@
+[Unit]
+Description=Beautiful Status Bar
+Documentation=man:polybar(1)
+
+[Service]
+ExecStart=/usr/bin/polybar
+EnvironmentFile=/home/sidharta/.config/systemd/env
+KillMode=process
+
+[Install]
+WantedBy=xsession.target

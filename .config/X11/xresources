@@ -1,4 +1,4 @@
-*.font: RobotoMono Nerd Font
+*.font: RobotoMono Nerd Font Mono, Symbola
 *.background:  #000b1e
 *.foreground:  #0abdc6
 *.cursorColor:  #0abdc6

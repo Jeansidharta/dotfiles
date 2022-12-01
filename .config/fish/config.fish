@@ -20,7 +20,7 @@ set --export XDG_CACHE_HOME "$HOME/.cache"
 fish_add_path /home/sidharta/bin
 fish_add_path /home/sidharta/scripts
 fish_add_path /home/sidharta/.cargo/bin
-fish_add_path /home/sidharta/.npm/global/bin
+fish_add_path /home/sidharta/.local/bin
 fish_add_path /home/sidharta/go/bin
 
 function userSV -a dir
@@ -31,11 +31,9 @@ function userSV -a dir
     end
 end
 
-alias bootsv="userSV onBoot"
-alias startsv="userSV onStart"
-alias xsv="userSV onXSession"
 alias ls="ls -h --color --time-style \"long-iso\""
 alias config="/usr/bin/git --git-dir=$HOME/dotfiles-repo/ --work-tree=$HOME"
+alias sessionctl="systemctl --user"
 set fish_greeting
 
 fish_vi_key_bindings

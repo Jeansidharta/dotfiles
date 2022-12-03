@@ -15,20 +15,10 @@ return require("packer").startup(function(use)
 		run = ":TSUpdate",
 	})
 	use({ "rcarriga/nvim-notify" })
-	-- use { "rebelot/heirline.nvim" }
 	use("neovim/nvim-lspconfig")
-	use({
-		"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-		config = function()
-			require("lsp_lines").setup()
-		end,
-	})
 	use("lewis6991/gitsigns.nvim")
 	use({ "petertriho/nvim-scrollbar" })
 	use({ "nvim-lualine/lualine.nvim" })
-	use({ "ms-jpq/coq_nvim", branch = "coq" })
-	use({ "ms-jpq/coq.artifacts", branch = "artifacts" })
-	use({ "ms-jpq/coq.thirdparty", branch = "3p" })
 	use({ "stevearc/dressing.nvim" })
 	use({ "tpope/vim-fugitive" })
 	use({
@@ -71,10 +61,6 @@ return require("packer").startup(function(use)
 	use({
 		"phaazon/hop.nvim",
 		branch = "v2", -- optional but strongly recommended
-		config = function()
-			-- you can configure Hop the way you like here; see :h hop-config
-			require("hop").setup({ keys = "etovxqpdygfblzhckisuran" })
-		end,
 	})
 	use({ "numToStr/Comment.nvim" })
 	use({ "jeansidharta/tokyodark.nvim" })
@@ -85,4 +71,16 @@ return require("packer").startup(function(use)
 		requires = { "nvim-lua/plenary.nvim" },
 	})
 	use({ "Jeansidharta/duck.nvim" })
+
+	-- Autocomplete
+	use({ "hrsh7th/cmp-nvim-lsp" })
+	use({ "hrsh7th/cmp-buffer" })
+	use({ "hrsh7th/cmp-path" })
+	use({ "hrsh7th/cmp-cmdline" })
+	use({ "hrsh7th/nvim-cmp" })
+	use({ "lewis6991/hover.nvim" })
+
+	use({ "michaelb/sniprun", run = "bash ./install.sh" })
+	use({ "lukas-reineke/indent-blankline.nvim" })
+	use({ "RRethy/vim-illuminate" })
 end)

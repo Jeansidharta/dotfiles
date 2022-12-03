@@ -16,8 +16,9 @@ set smartcase
 set infercase
 
 " ---------- Render tab characters ----------
-set list
-set listchars=tab:>\ 
+" Unnecessary with indent_blankline plugin
+" set list
+" set listchars=tab:>\ 
 
 " ---------- Tab size config ----------
 set tabstop=4

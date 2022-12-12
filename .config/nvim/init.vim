@@ -1,4 +1,5 @@
 source ~/.config/nvim/settings.vim
+source ~/.config/nvim/settings.lua
 " Trigger a highlight in the appropriate direction when pressing these keys:
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 source ~/.config/nvim/packer.lua

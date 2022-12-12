@@ -177,6 +177,10 @@ vim.api.nvim_set_keymap("n", "<leader>twt", ":Telescope live_grep<CR>", { norema
 
 vim.api.nvim_set_keymap("v", "<leader>tw", ":lua search_visually_selected_text()<CR>", { noremap = true })
 
+vim.api.nvim_set_keymap("n", "<leader>th", ":Telescope help_tags<CR>", { noremap = true })
+
+vim.api.nvim_set_keymap("n", "<leader>tp", ":lua require('telescope.builtin').resume()<CR>", { noremap = true })
+
 function search_yanked_text()
 	local text = vim.fn.getreg('"')
 	if string.find(text, "\n") then

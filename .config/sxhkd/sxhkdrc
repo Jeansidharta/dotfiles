@@ -17,7 +17,7 @@ alt + Return
 
 # Screenshoting
 ctrl + F1
-	flameshot gui
+	flameshot gui --raw > /tmp/screenshot && xclip -selection clipboard -t image/png /tmp/screenshot
 
 ctrl + shift + F1
 	peek

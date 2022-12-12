@@ -43,4 +43,5 @@ source ~/.config/nvim/hover.lua
 source ~/.config/nvim/indent_blankline.lua
 source ~/.config/nvim/illuminate.lua
 source ~/.config/nvim/sniprun.lua
+source ~/.config/nvim/luasnip.lua
 

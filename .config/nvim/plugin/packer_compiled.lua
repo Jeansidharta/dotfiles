@@ -84,6 +84,11 @@ _G.packer_plugins = {
     path = "/home/sidharta/.local/share/nvim/site/pack/packer/start/FTerm.nvim",
     url = "https://github.com/numToStr/FTerm.nvim"
   },
+  LuaSnip = {
+    loaded = true,
+    path = "/home/sidharta/.local/share/nvim/site/pack/packer/start/LuaSnip",
+    url = "https://github.com/L3MON4D3/LuaSnip"
+  },
   ["cmd-parser.nvim"] = {
     loaded = true,
     path = "/home/sidharta/.local/share/nvim/site/pack/packer/start/cmd-parser.nvim",

@@ -17,6 +17,10 @@ set --export XDG_RUNTIME_DIR "/home/sidharta/.local/run"
 set --export XDG_DOWNLOAD_DIR "$HOME/Downloads"
 set --export XDG_CACHE_HOME "$HOME/.cache"
 
+set --export PAGER "moar"
+set --export EDITOR "vim"
+set --export BROWSER "firefox"
+
 fish_add_path /home/sidharta/bin
 fish_add_path /home/sidharta/scripts
 fish_add_path /home/sidharta/.cargo/bin

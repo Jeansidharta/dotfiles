@@ -85,4 +85,8 @@ return require("packer").startup(function(use)
 	use({ "lukas-reineke/indent-blankline.nvim" })
 	use({ "RRethy/vim-illuminate" })
 	use({ "L3MON4D3/LuaSnip", tag = "v<CurrentMajor>.*" })
+	use({
+		"cbochs/grapple.nvim",
+		requires = { "nvim-lua/plenary.nvim" },
+	})
 end)

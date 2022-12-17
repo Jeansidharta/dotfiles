@@ -1,4 +1,3 @@
-
 #
 # wm independent hotkeys
 #
@@ -9,7 +8,7 @@ alt + space
 
 # terminal emulator
 alt + Return
-	st
+	alacritty
 
 # Clipboard manager
 # ctrl + alt + v
@@ -17,7 +16,7 @@ alt + Return
 
 # Screenshoting
 ctrl + F1
-	flameshot gui --raw > /tmp/screenshot && xclip -selection clipboard -t image/png /tmp/screenshot
+	flameshot gui --raw > /tmp/screenshot && xclip -selection clipboard -t image/png /tmp/screenshot; pkill flameshot
 
 ctrl + shift + F1
 	peek

@@ -17,7 +17,7 @@ source_config("packer.lua")
 vim.g.mapleader = " "
 
 -- colorscheme codedark
-vim.cmd("colorscheme tokyodark")
+vim.cmd([[colorscheme tokyodark]])
 
 vim.keymap.set({ "n" }, "<leader>,", ":source" .. path .. "init.lua<CR>", { noremap = true })
 vim.keymap.set({ "n" }, "<leader>.", ":edit" .. path .. "init.lua<CR>", { noremap = true })
@@ -52,3 +52,4 @@ source_config("indent_blankline.lua")
 source_config("illuminate.lua")
 source_config("sniprun.lua")
 source_config("luasnip.lua")
+source_config("grapple.lua")

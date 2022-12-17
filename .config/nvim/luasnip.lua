@@ -69,7 +69,7 @@ ls.add_snippets("vue", {
 			"	}",
 			"}",
 			"</script>",
-			'<style lang="scss">',
+			'<style lang="scss" scoped>',
 			"</style>",
 		}),
 	}),

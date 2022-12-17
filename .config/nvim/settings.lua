@@ -26,10 +26,10 @@ vim.o.tabstop = 4
 vim.o.shiftwidth = 4
 
 ------------ Line Column line highlighting ----------
-vim.o.cursorline = true
-vim.o.cursorcolumn = true
-vim.cmd([[highlight CursorLine ctermbg=Yellow cterm=bold guibg=#202020]])
-vim.cmd([[highlight CursorColumn ctermbg=Yellow cterm=bold guibg=#202020]])
+-- vim.o.cursorline = true
+-- vim.o.cursorcolumn = true
+-- vim.api.nvim_set_hl(0, "EndOfBuffer", { bold = true, bg = "#202020" })
+-- vim.api.nvim_set_hl(0, "CursorColumn", { bold = true, bg = "NONE" })
 
 ------------ Timeout ----------
 vim.o.timeout = false
@@ -57,13 +57,11 @@ vim.o.updatetime = 300
 vim.o.foldmethod = "expr"
 vim.o.foldexpr = "nvim_treesitter#foldexpr()"
 
--- vim.api.nvim_set_hl(0, "FoldColumn", { fg = "#FF0000" })
-
-local group = vim.api.nvim_create_augroup("FileTypeTabStopSetter", { clear = true })
+local file_type_tab_stop_setter_group = vim.api.nvim_create_augroup("FileTypeTabStopSetter", { clear = true })
 
 vim.api.nvim_create_autocmd("filetype", {
 	pattern = { "javascript", "vue", "lua" },
-	group = group,
+	group = file_type_tab_stop_setter_group,
 	callback = function()
 		vim.bo.tabstop = 2
 	end,
@@ -71,8 +69,33 @@ vim.api.nvim_create_autocmd("filetype", {
 
 vim.api.nvim_create_autocmd("filetype", {
 	pattern = { "rust", "json", "html" },
-	group = group,
+	group = file_type_tab_stop_setter_group,
 	callback = function()
 		vim.bo.tabstop = 4
 	end,
+})
+
+-- Make things transparent :D
+
+local update_opacity_group = vim.api.nvim_create_augroup("UpdateOpacity", { clear = true })
+
+function set_transparent_background()
+	vim.cmd([[
+			highlight EndOfBuffer guibg=NONE ctermbg=NONE
+			highlight SignColumn guibg=NONE ctermbg=NONE
+			highlight VertSplit guibg=NONE ctermbg=NONE
+			highlight SpecialKey guibg=NONE ctermbg=NONE
+			highlight NonText guibg=NONE ctermbg=NONE
+			highlight NonText guibg=NONE ctermbg=NONE
+			highlight Folded guibg=NONE ctermbg=NONE
+			highlight LineNr guibg=NONE ctermbg=NONE
+			highlight Normal guibg=NONE ctermbg=NONE
+			highlight NormalFloat guibg=NONE ctermbg=NONE
+			highlight NormalNC guibg=NONE ctermbg=NONE
+	]])
+end
+
+vim.api.nvim_create_autocmd({ "ColorScheme" }, {
+	group = update_opacity_group,
+	callback = set_transparent_background,
 })

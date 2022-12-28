@@ -75,6 +75,18 @@ vim.api.nvim_create_autocmd("filetype", {
 	end,
 })
 
+local random_commands_group = vim.api.nvim_create_augroup("RandomCommands", { clear = true })
+
+vim.api.nvim_create_autocmd("filetype", {
+	pattern = { "lua" },
+	group = random_commands_group,
+	callback = function()
+		vim.keymap.set("n", "<leader>ff", function()
+			vim.cmd([[luafile %]])
+		end)
+	end,
+})
+
 -- Make things transparent :D
 
 local update_opacity_group = vim.api.nvim_create_augroup("UpdateOpacity", { clear = true })

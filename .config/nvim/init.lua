@@ -1,3 +1,17 @@
+-- Bootstrap lazy.nvim if it's not located.
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+	vim.fn.system({
+		"git",
+		"clone",
+		"--filter=blob:none",
+		"--single-branch",
+		"https://github.com/folke/lazy.nvim.git",
+		lazypath,
+	})
+end
+vim.opt.runtimepath:prepend(lazypath)
+
 function script_path()
 	local str = debug.getinfo(2, "S").source:sub(2)
 	return str:match("(.*/)")
@@ -12,7 +26,7 @@ end
 source_config("settings.lua")
 -- Trigger a highlight in the appropriate direction when pressing these keys:
 vim.g.qs_highlight_on_keys = { "f", "F", "t", "T" }
-source_config("packer.lua")
+source_config("lazy.lua")
 
 vim.g.mapleader = " "
 

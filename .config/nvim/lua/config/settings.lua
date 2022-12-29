@@ -1,3 +1,5 @@
+vim.g.mapleader = " "
+
 ------------ Ruler options ----------
 vim.o.number = true
 vim.o.ruler = true

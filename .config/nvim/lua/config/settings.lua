@@ -1,5 +1,13 @@
 vim.g.mapleader = " "
 
+------------ Undo file --------------
+local undo_dir = vim.fn.stdpath("data") .. "/undofiles"
+if vim.fn.isdirectory(undo_dir) == 0 then
+	vim.fn.mkdir(undo_dir, "", 448) -- 448 is 700 perm
+end
+vim.o.undodir = undo_dir
+vim.o.undofile = true
+
 ------------ Ruler options ----------
 vim.o.number = true
 vim.o.ruler = true
@@ -113,3 +121,20 @@ vim.api.nvim_create_autocmd({ "ColorScheme" }, {
 	group = update_opacity_group,
 	callback = set_transparent_background,
 })
+--
+-- vim.api.nvim_create_user_command("CustomNextObject", function(args)
+-- 	print(vim.inspect(args))
+-- end, { force = true, nargs = 1 })
+--
+-- vim.cmd([[
+-- function! CustomNextObject(arg)
+-- 		execute "CustomNextObject" a:arg
+-- endfunction
+-- ]])
+--
+-- local function next_object()
+-- 	vim.o.opfunc = "CustomNextObject"
+-- 	return "g@"
+-- end
+-- vim.keymap.set({ "n", "v" }, "gt", next_object, { expr = true })
+

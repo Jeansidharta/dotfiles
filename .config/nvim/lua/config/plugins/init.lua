@@ -32,6 +32,7 @@ return {
 		event = "VeryLazy",
 		config = function()
 			require("telescope").load_extension("notify")
+			require("notify").setup({ background_colour = "#000000" })
 			vim.notify = require("notify")
 		end,
 	},
@@ -80,4 +81,25 @@ return {
 		},
 		config = true,
 	},
+	{
+		url = "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+		event = "BufReadPost",
+		config = function()
+			require("lsp_lines").setup()
+			vim.diagnostic.config({ virtual_lines = { only_current_line = true } })
+		end,
+		keys = {
+			{
+				"<leader>dl",
+				function()
+					require("lsp_lines").toggle()
+				end,
+				{ desc = "Toggle lsp_lines" },
+			},
+		},
+	},
+	{ "EtiamNullam/deferred-clipboard.nvim", lazy = false, config = true },
+	{ "chrisgrieser/nvim-various-textobjs", event = "VeryLazy", config = {
+		useDefaultKeymaps = true,
+	} },
 }

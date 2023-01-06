@@ -90,6 +90,16 @@ function config()
 					},
 				},
 			},
+			diagnostics = {
+				mappings = {
+					i = {
+						["<C-s>"] = function(prompt_bufnr)
+							local entry = action_state.get_selected_entry()
+							print(vim.inspect(entry))
+						end,
+					},
+				},
+			},
 			git_branches = {
 				mappings = {
 					i = {
@@ -108,22 +118,44 @@ function config()
 		extensions = {
 			file_browser = {
 				hijack_netrw = true,
+				grouped = true,
+				hidden = true,
+				respect_gitignore = false,
 			},
-			fzf = {
-				fuzzy = true, -- false will only do exact matching
-				override_generic_sorter = true, -- override the generic sorter
-				override_file_sorter = true, -- override the file sorter
-				case_mode = "smart_case", -- or "ignore_case" or "respect_case". the default case_mode is "smart_case"
+			undo = {
+				mappings = {
+					i = {
+						["<c-r>"] = require("telescope-undo.actions").restore,
+						["<c-d>"] = require("telescope-undo.actions").yank_deletions,
+						["<c-y>"] = require("telescope-undo.actions").yank_additions,
+					},
+					n = {
+						["<c-r>"] = require("telescope-undo.actions").restore,
+						["<c-d>"] = require("telescope-undo.actions").yank_deletions,
+						["<c-y>"] = require("telescope-undo.actions").yank_additions,
+					},
+				},
 			},
 			telescope_git = {},
 		},
 	})
+	require("telescope").load_extension("undo")
 end
 
 return {
 	"nvim-telescope/telescope.nvim",
 	tag = "0.1.0",
-	dependencies = { "nvim-lua/plenary.nvim", { "nvim-telescope/telescope-fzf-native.nvim", build = "make" } },
+	dependencies = {
+		"nvim-lua/plenary.nvim",
+		{
+			"nvim-telescope/telescope-fzf-native.nvim",
+			build = "make",
+		},
+		{
+			-- "debugloop/telescope-undo.nvim",
+			dir = "~/projects/personal/vim-plugins/telescope-undo.nvim",
+		},
+	},
 	config = config,
 	cmd = { "Telescope" },
 
@@ -139,6 +171,8 @@ return {
 			end,
 			noremap = true,
 		},
+		-- Undo tree
+		{ "<leader>tu", "<cmd>Telescope undo<cr>", noremap = true },
 
 		-- Notify
 		{ "<leader>tn", ":Telescope notify<CR>", noremap = true },

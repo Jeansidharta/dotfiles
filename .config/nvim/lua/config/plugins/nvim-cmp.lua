@@ -44,6 +44,12 @@ function config()
 		}),
 	})
 
+	cmp.setup.filetype("lua", {
+		sources = cmp.config.sources({
+			{ name = "nvim_lua" }, -- You can specify the `cmp_git` source if you were installed it.
+		}),
+	})
+
 	-- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
 	cmp.setup.cmdline({ "/", "?" }, {
 		mapping = cmp.mapping.preset.cmdline(),
@@ -71,8 +77,9 @@ return {
 		"hrsh7th/cmp-buffer",
 		"hrsh7th/cmp-path",
 		"hrsh7th/cmp-cmdline",
+		"hrsh7th/cmp-nvim-lua",
 		"saadparwaiz1/cmp_luasnip",
 	},
-	event = "BufReadPost",
+	event = "BufEnter",
 	config = config,
 }

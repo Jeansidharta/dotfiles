@@ -46,10 +46,25 @@ function config()
 		},
 	})
 
-	vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-		pattern = { "*.ts", "*.js", "*.html", "*.md", "*.vue", "*.rs", "*.lua", "*.tf", "*.nginx" },
-		command = "FormatWrite",
-	})
+	local group = vim.api.nvim_create_augroup("FormatOnSave", { clear = true })
+
+	function create_autocmd()
+		vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+			group = group,
+			pattern = { "*.ts", "*.js", "*.html", "*.md", "*.vue", "*.rs", "*.lua", "*.tf", "*.nginx" },
+			command = "FormatWrite",
+		})
+	end
+
+	create_autocmd()
+	vim.api.nvim_create_user_command("FormatDisable", function()
+		group = vim.api.nvim_create_augroup("FormatOnSave", { clear = true })
+	end, { force = true })
+
+	vim.api.nvim_create_user_command("FormatEnable", function()
+		group = vim.api.nvim_create_augroup("FormatOnSave", { clear = true })
+		create_autocmd()
+	end, { force = true })
 
 	-- This is a POC for enabling auto-formating on specific filetypes, not file extensions
 	--

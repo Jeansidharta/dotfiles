@@ -170,67 +170,31 @@ return {
 				})
 			end,
 			noremap = true,
+			desc = "Open file browser",
 		},
 		-- Undo tree
-		{ "<leader>tu", "<cmd>Telescope undo<cr>", noremap = true },
+		{ "<leader>tu", "<cmd>Telescope undo<cr>", noremap = true, desc = "Open undo tree" },
 
 		-- Notify
-		{ "<leader>tn", ":Telescope notify<CR>", noremap = true },
+		{ "<leader>tn", ":Telescope notify<CR>", noremap = true, desc = "Open notifications history" },
 		---------------------- Git --------------------
-		{ "<leader>tgb", ":Telescope telescope_git all_branches<CR>", noremap = true },
-		{ "<leader>tgd", ":Telescope git_bcommits<CR>", noremap = true },
-		{ "<leader>tgc", ":Telescope git_commits<CR>", noremap = true },
-		{ "<leader>tgs", ":Telescope git_status<CR>", noremap = true },
-		{ "<leader>tgf", ":Telescope git_files<CR>", noremap = true },
+		{ "<leader>tgb", ":Telescope telescope_git all_branches<CR>", noremap = true, desc = "Open branch list" },
+		{ "<leader>tgd", ":Telescope git_bcommits<CR>", noremap = true, desc = "Open git commits for current file" },
+		{ "<leader>tgc", ":Telescope git_commits<CR>", noremap = true, desc = "Open git commits" },
+		{ "<leader>tgs", ":Telescope git_status<CR>", noremap = true, desc = "Open git status" },
+		{ "<leader>tgf", ":Telescope git_files<CR>", noremap = true, desc = "Open git files" },
 		-- Default Telescope
-		{ "<leader>tt", ":Telescope<CR>", noremap = true },
-		{ "<leader>twt", ":Telescope live_grep<CR>", noremap = true },
-		{ -- Live grep current visual selection
-			"<leader>tw",
-			function()
-				function get_visually_selected_text()
-					local s_start = vim.fn.getpos("'<")
-					local s_end = vim.fn.getpos("'>")
-					local n_lines = math.abs(s_end[2] - s_start[2]) + 1
-					local lines = vim.api.nvim_buf_get_lines(0, s_start[2] - 1, s_end[2], false)
-					lines[1] = string.sub(lines[1], s_start[3], -1)
-					if n_lines == 1 then
-						lines[n_lines] = string.sub(lines[n_lines], 1, s_end[3] - s_start[3] + 1)
-					else
-						lines[n_lines] = string.sub(lines[n_lines], 1, s_end[3])
-					end
-					return table.concat(lines, "\n")
-				end
-				local visual_text = get_visually_selected_text()
-				if string.find(visual_text, "\n") then
-					print("Cannot search for text with new line.")
-				else
-					require("telescope.builtin").live_grep({ default_text = visual_text })
-				end
-			end,
-			mode = "v",
-			noremap = true,
-		},
-		{ "<leader>th", ":Telescope help_tags<CR>", noremap = true },
+		{ "<leader>tt", ":Telescope<CR>", noremap = true, "Open telescope pickers" },
+		{ "<leader>twt", ":Telescope live_grep<CR>", noremap = true, desc = "Open live grep" },
+		{ "<leader>th", ":Telescope help_tags<CR>", noremap = true, desc = "Open help window" },
 		{
 			"<leader>tp",
 			function()
 				require("telescope.builtin").resume()
 			end,
 			noremap = true,
+			desc = "Resume last picker",
 		},
-		{ -- Live grep last yanked text
-			"<leader>twy",
-			function()
-				local text = vim.fn.getreg('"')
-				if string.find(text, "\n") then
-					print("Cannot search for text with new line.")
-				else
-					require("telescope.builtin").live_grep({ default_text = text })
-				end
-			end,
-			noremap = true,
-		},
-		{ "<leader>tr", ":Telescope lsp_references<CR>", noremap = true },
+		{ "<leader>tr", ":Telescope lsp_references<CR>", noremap = true, desc = "Open LSP references" },
 	},
 }

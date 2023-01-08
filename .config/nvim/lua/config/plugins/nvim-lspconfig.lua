@@ -12,22 +12,26 @@ function config()
 
 		-- Mappings.
 		-- See `:help vim.lsp.*` for documentation on any of the below functions
-		local bufopts = { noremap = true, silent = true, buffer = bufnr }
-		vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
-		vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
-		vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
-		vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
-		vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, bufopts)
-		vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, bufopts)
-		vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
+		local bufopts = function(desc)
+			return { noremap = true, silent = true, buffer = bufnr, desc = desc }
+		end
+		vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts("Go to declaration"))
+		vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts("Go to definition"))
+		vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts("Open hover window"))
+		vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts("Go to implementation"))
+		vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, bufopts("Signature help"))
+		vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, bufopts("Add workspace folder"))
+		vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, bufopts("Remove workspace folder"))
 		vim.keymap.set("n", "<space>wl", function()
 			print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-		end, bufopts)
-		vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, bufopts)
-		vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, bufopts)
-		vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, bufopts)
-		vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
-		vim.keymap.set("n", "<space>f", vim.lsp.buf.formatting, bufopts)
+		end, bufopts("List workspace folders"))
+		vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, bufopts("Go to type definition"))
+		vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, bufopts("Rename symbol"))
+		vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, bufopts("Code action"))
+		vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts("Go to references"))
+		vim.keymap.set("n", "<space>f", function()
+			return vim.lsp.buf.formatting({ async = true })
+		end, bufopts("Formating"))
 	end
 
 	local lsp_flags = {

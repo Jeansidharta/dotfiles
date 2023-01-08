@@ -32,6 +32,7 @@ return {
 				require("grapple").toggle()
 			end,
 			noremap = true,
+			desc = "Mark grapple",
 		},
 		{
 			"<leader>mt",
@@ -39,6 +40,7 @@ return {
 				require("grapple").popup_tags()
 			end,
 			noremap = true,
+			desc = "Open grapple",
 		},
 	},
 }

@@ -37,8 +37,8 @@ return {
 		yank_dry_run = true,
 	},
 	keys = {
-		{ "<leader>rs", "<Plug>RestNvim", noremap = true },
-		{ "<leader>rp", "<Plug>RestNvimPreview", noremap = true },
-		{ "<leader>rl", "<Plug>RestNvimLast", noremap = true },
+		{ "<leader>rs", "<Plug>RestNvim", noremap = true, desc = "Run request" },
+		{ "<leader>rp", "<Plug>RestNvimPreview", noremap = true, desc = "Open preview" },
+		{ "<leader>rl", "<Plug>RestNvimLast", noremap = true, desc = "Re-run last request" },
 	},
 }

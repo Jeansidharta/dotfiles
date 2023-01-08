@@ -90,7 +90,12 @@ return {
 		require("telescope").load_extension("neoclip")
 	end,
 	keys = {
-		{ "<leader>tc", ":Telescope neoclip<Return>", noremap = true },
-		{ "<leader>tm", ":lua require('telescope').extensions.macroscope.default()<Return>", noremap = true },
+		{ "<leader>tc", ":Telescope neoclip<Return>", noremap = true, desc = "Open neoclip in telescope" },
+		{
+			"<leader>tm",
+			":lua require('telescope').extensions.macroscope.default()<Return>",
+			noremap = true,
+			desc = "Open macroscope in telescope",
+		},
 	},
 }

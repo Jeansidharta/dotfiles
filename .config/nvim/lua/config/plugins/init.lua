@@ -86,15 +86,28 @@ return {
 		event = "BufReadPost",
 		config = function()
 			require("lsp_lines").setup()
-			vim.diagnostic.config({ virtual_lines = { only_current_line = true } })
+			vim.diagnostic.config({
+				virtual_lines = false,
+			})
 		end,
 		keys = {
 			{
 				"<leader>dl",
 				function()
-					require("lsp_lines").toggle()
+					local is_lines_set = vim.diagnostic.config().virtual_lines
+					if is_lines_set then
+						vim.diagnostic.config({
+							virtual_lines = false,
+							virtual_text = true,
+						})
+					else
+						vim.diagnostic.config({
+							virtual_lines = true,
+							virtual_text = false,
+						})
+					end
 				end,
-				{ desc = "Toggle lsp_lines" },
+				desc = "Toggle lsp_lines",
 			},
 		},
 	},
@@ -102,4 +115,5 @@ return {
 	{ "chrisgrieser/nvim-various-textobjs", event = "VeryLazy", config = {
 		useDefaultKeymaps = true,
 	} },
+	"elkowar/yuck.vim",
 }

@@ -21,14 +21,14 @@ return {
 
 	keys = {
 		{
-			"<leader>k",
+			"K",
 			function()
 				require("hover").hover()
 			end,
 			desc = "hover.nvim",
 		},
 		{
-			"<leader>K",
+			"<leader>k",
 			function()
 				require("hover").hover_select()
 			end,

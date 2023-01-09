@@ -137,4 +137,3 @@ vim.api.nvim_create_autocmd({ "ColorScheme" }, {
 -- 	return "g@"
 -- end
 -- vim.keymap.set({ "n", "v" }, "gt", next_object, { expr = true })
-

@@ -17,7 +17,6 @@ function config()
 		end
 		vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts("Go to declaration"))
 		vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts("Go to definition"))
-		vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts("Open hover window"))
 		vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts("Go to implementation"))
 		vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, bufopts("Signature help"))
 		vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, bufopts("Add workspace folder"))
@@ -38,54 +37,55 @@ function config()
 		-- This is the default in Nvim 0.7+
 		debounce_text_changes = 150,
 	}
-	require("lspconfig")["pyright"].setup({ on_attach = on_attach, flags = lsp_flags, capabilities = capabilities })
-	require("lspconfig")["tsserver"].setup({ on_attach = on_attach, flags = lsp_flags, capabilities = capabilities })
-	require("lspconfig")["rust_analyzer"].setup({
-		on_attach = on_attach,
-		flags = lsp_flags,
-		capabilities = capabilities,
-	})
-	require("lspconfig").vuels.setup({ on_attach = on_attach, flags = lsp_flags, capabilities = capabilities })
 
-	-- This will be the path towards your sumneko folder. This is subjective
-	local sumneko_root_path = "/home/sidharta/git/lua-language-server"
-	local sumneko_binary = sumneko_root_path .. "/bin/lua-language-server"
-	require("lspconfig").sumneko_lua.setup({
-		cmd = { sumneko_binary, "-E", sumneko_root_path .. "/main.lua" },
-		on_attach = on_attach,
-		flags = lsp_flags,
-		settings = {
-			Lua = {
-				runtime = { version = "LuaJIT", path = vim.split(package.path, ";") },
-				completion = { enable = true, callSnippet = "Both" },
-				diagnostics = {
-					enable = true,
-					globals = { "vim", "describe" },
-					disable = { "lowercase-global" },
-				},
-				workspace = {
-					library = {
-						[vim.fn.expand("$VIMRUNTIME/lua")] = true,
-						[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-						[vim.fn.expand("/usr/share/awesome/lib")] = true,
+	-- local packages = require("mason-registry").get_installed_packages()
+
+	require("lspconfig")["fennel-ls"].setup({})
+	require("mason-lspconfig").setup_handlers({
+		function(server_name) -- default handler (optional)
+			require("lspconfig")[server_name].setup({
+				on_attach = on_attach,
+				flags = lsp_flags,
+				capabilities = capabilities,
+			})
+		end,
+
+		["sumneko_lua"] = function(_)
+			-- This will be the path towards your sumneko folder. This is subjective
+			local mason_path = require("mason.settings").current.install_root_dir
+			local sumneko_binary = mason_path .. "/bin/lua-language-server"
+			local sumneko_main = mason_path .. "/packages/lua-language-server/extension/server/main.lua"
+
+			require("lspconfig").sumneko_lua.setup({
+				cmd = { sumneko_binary, sumneko_main },
+				on_attach = on_attach,
+				flags = lsp_flags,
+				capabilities = capabilities,
+				settings = {
+					Lua = {
+						runtime = { version = "LuaJIT", path = vim.split(package.path, ";") },
+						completion = { enable = true, callSnippet = "Both" },
+						diagnostics = {
+							enable = true,
+							globals = { "vim", "describe" },
+							disable = { "lowercase-global" },
+						},
+						workspace = {
+							library = {
+								[vim.fn.expand("$VIMRUNTIME/lua")] = true,
+								[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+								[vim.fn.expand("/usr/share/awesome/lib")] = true,
+							},
+							-- adjust these two values if your performance is not optimal
+							maxPreload = 2000,
+							thirdParty = false,
+							preloadFileSize = 1000,
+						},
 					},
-					-- adjust these two values if your performance is not optimal
-					maxPreload = 2000,
-					preloadFileSize = 1000,
 				},
-			},
-		},
-		capabilities = capabilities,
+			})
+		end,
 	})
-
-	require("lspconfig").bashls.setup({ on_attach = on_attach, flags = lsp_flags, capabilities = capabilities })
-	require("lspconfig").cssls.setup({ on_attach = on_attach, flags = lsp_flags, capabilities = capabilities })
-	require("lspconfig").html.setup({ on_attach = on_attach, flags = lsp_flags, capabilities = capabilities })
-	require("lspconfig").jsonls.setup({ on_attach = on_attach, flags = lsp_flags, capabilities = capabilities })
-	require("lspconfig").terraformls.setup({ on_attach = on_attach, flags = lsp_flags, capabilities = capabilities })
-	require("lspconfig").vimls.setup({ on_attach = on_attach, flags = lsp_flags, capabilities = capabilities })
-	require("lspconfig").zls.setup({ on_attach = on_attach, flags = lsp_flags, capabilities = capabilities })
-	require("lspconfig").gopls.setup({ on_attach = on_attach, flags = lsp_flags, capabilities = capabilities })
 end
 
 return {
@@ -98,5 +98,12 @@ return {
 				return true
 			end,
 		} },
+		{ "williamboman/mason.nvim", config = true, dir = "~/git/mason.nvim" },
+		{
+			"williamboman/mason-lspconfig.nvim",
+			config = {
+				ensure_installed = { "sumneko_lua", "rust_analyzer" },
+			},
+		},
 	},
 }

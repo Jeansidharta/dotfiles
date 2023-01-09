@@ -37,17 +37,17 @@ function create_editor_window(initial_lines, callback)
 	})
 end
 
-function edit_macro(opts)
+function replace_macro(opts)
 	local storage = require("neoclip.storage")
 	create_editor_window(opts.entry.contents, function(new_macro_content)
 		local new_entry = vim.deepcopy(opts.entry)
 		new_entry.contents = new_macro_content
-		storage.edit(opts.typ, opts.entry, new_entry)
+		storage.replace(opts.typ, opts.entry, new_entry)
 	end)
 end
 
-function handle_edit_action(opts)
-	edit_macro(opts)
+function handle_replace_action(opts)
+	replace_macro(opts)
 end
 
 return {
@@ -75,12 +75,12 @@ return {
 				telescope = {
 					i = {
 						custom = {
-							["<c-e>"] = handle_edit_action,
+							["<c-e>"] = handle_replace_action,
 						},
 					},
 					n = {
 						custom = {
-							["e"] = handle_edit_action,
+							["e"] = handle_replace_action,
 						},
 					},
 				},

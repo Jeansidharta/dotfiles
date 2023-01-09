@@ -1,4 +1,7 @@
-vim.keymap.set("n", "<leader>l", ":messages<CR>", { noremap = true })
+vim.keymap.set("n", "<leader>l", ":messages<CR>", { noremap = true, desc = "Show messages" })
+vim.keymap.set("n", "<leader>n", function()
+	require("notify").dismiss({})
+end, { noremap = true, desc = "Clear all notifications" })
 
 ------------------ DIAGNOSTICS --------------------
 vim.keymap.set("n", "<leader>dn", vim.diagnostic.goto_next, { noremap = true, desc = "Go to next diagnostics" })

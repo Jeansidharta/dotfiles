@@ -16,7 +16,7 @@ alt + Return
 
 # Screenshoting
 ctrl + F1
-	flameshot gui --raw > /tmp/screenshot && xclip -selection clipboard -t image/png /tmp/screenshot; pkill flameshot
+	flameshot gui --raw > /tmp/screenshot.png && xclip -selection clipboard -t image/png /tmp/screenshot.png; pkill flameshot
 
 ctrl + shift + F1
 	peek
@@ -115,7 +115,7 @@ alt + q
 
 # Pointer actions
 alt + b
-alt + space
+alt + g
 	/home/sidharta/.config/bspwm/scripts/toggle-borders
 
 # Floating thing

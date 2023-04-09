@@ -1,4 +1,4 @@
-function config()
+local function config()
 	-- Mappings.
 	-- See `:help vim.diagnostic.*` for documentation on any of the below functions
 
@@ -40,7 +40,7 @@ function config()
 
 	-- local packages = require("mason-registry").get_installed_packages()
 
-	require("lspconfig")["fennel-ls"].setup({})
+	require("lspconfig")["fennel_ls"].setup({})
 	require("mason-lspconfig").setup_handlers({
 		function(server_name) -- default handler (optional)
 			require("lspconfig")[server_name].setup({
@@ -50,41 +50,7 @@ function config()
 			})
 		end,
 
-		["sumneko_lua"] = function(_)
-			-- This will be the path towards your sumneko folder. This is subjective
-			local mason_path = require("mason.settings").current.install_root_dir
-			local sumneko_binary = mason_path .. "/bin/lua-language-server"
-			local sumneko_main = mason_path .. "/packages/lua-language-server/extension/server/main.lua"
-
-			require("lspconfig").sumneko_lua.setup({
-				cmd = { sumneko_binary, sumneko_main },
-				on_attach = on_attach,
-				flags = lsp_flags,
-				capabilities = capabilities,
-				settings = {
-					Lua = {
-						runtime = { version = "LuaJIT", path = vim.split(package.path, ";") },
-						completion = { enable = true, callSnippet = "Both" },
-						diagnostics = {
-							enable = true,
-							globals = { "vim", "describe" },
-							disable = { "lowercase-global" },
-						},
-						workspace = {
-							library = {
-								[vim.fn.expand("$VIMRUNTIME/lua")] = true,
-								[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-								[vim.fn.expand("/usr/share/awesome/lib")] = true,
-							},
-							-- adjust these two values if your performance is not optimal
-							maxPreload = 2000,
-							thirdParty = false,
-							preloadFileSize = 1000,
-						},
-					},
-				},
-			})
-		end,
+		["rust_analyzer"] = function() end,
 	})
 end
 
@@ -98,11 +64,11 @@ return {
 				return true
 			end,
 		} },
-		{ "williamboman/mason.nvim", config = true, dir = "~/git/mason.nvim" },
+		{ "williamboman/mason.nvim", config = true },
 		{
 			"williamboman/mason-lspconfig.nvim",
 			config = {
-				ensure_installed = { "sumneko_lua", "rust_analyzer" },
+				ensure_installed = { "lua_ls", "rust_analyzer" },
 			},
 		},
 	},

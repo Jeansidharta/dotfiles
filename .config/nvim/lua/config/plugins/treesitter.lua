@@ -62,6 +62,20 @@ function config()
 		},
 	})
 
+	require("nvim-treesitter").define_modules({
+
+		attach = function(bufnr, lang)
+			print("Attached to " .. bufnr .. " as " .. lang)
+		end,
+		detach = function(bufnr)
+			print("Detached from " .. bufnr)
+		end,
+		is_supported = function(lang)
+			print("is_supported" .. bufnr)
+			return true
+		end,
+	})
+
 	-- reloads all folds. This is due to a bug. See:
 	-- https://github.com/nvim-telescope/telescope.nvim/issues/699
 	vim.api.nvim_create_autocmd({ "BufEnter" }, {

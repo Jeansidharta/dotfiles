@@ -1,5 +1,11 @@
 vim.g.mapleader = " "
 
+vim.cmd([[filetype plugin on]])
+
+vim.opt.jumpoptions:append("stack")
+
+vim.opt.colorcolumn:append("100")
+
 ------------ Undo file --------------
 local undo_dir = vim.fn.stdpath("data") .. "/undofiles"
 if vim.fn.isdirectory(undo_dir) == 0 then
@@ -97,31 +103,6 @@ vim.api.nvim_create_autocmd("filetype", {
 	end,
 })
 
--- Make things transparent :D
-
-local update_opacity_group = vim.api.nvim_create_augroup("UpdateOpacity", { clear = true })
-
-function set_transparent_background()
-	vim.cmd([[
-			highlight EndOfBuffer guibg=NONE ctermbg=NONE
-			highlight SignColumn guibg=NONE ctermbg=NONE
-			highlight VertSplit guibg=NONE ctermbg=NONE
-			highlight SpecialKey guibg=NONE ctermbg=NONE
-			highlight NonText guibg=NONE ctermbg=NONE
-			highlight NonText guibg=NONE ctermbg=NONE
-			highlight Folded guibg=NONE ctermbg=NONE
-			highlight LineNr guibg=NONE ctermbg=NONE
-			highlight Normal guibg=NONE ctermbg=NONE
-			highlight NormalFloat guibg=NONE ctermbg=NONE
-			highlight NormalNC guibg=NONE ctermbg=NONE
-	]])
-end
-
-vim.api.nvim_create_autocmd({ "ColorScheme" }, {
-	group = update_opacity_group,
-	callback = set_transparent_background,
-})
---
 -- vim.api.nvim_create_user_command("CustomNextObject", function(args)
 -- 	print(vim.inspect(args))
 -- end, { force = true, nargs = 1 })
@@ -137,3 +118,14 @@ vim.api.nvim_create_autocmd({ "ColorScheme" }, {
 -- 	return "g@"
 -- end
 -- vim.keymap.set({ "n", "v" }, "gt", next_object, { expr = true })
+
+local max_distance = 3
+
+for _, key in pairs({ "<Down>", "<Up>", "j", "k" }) do
+	vim.keymap.set({ "n", "v" }, key, function()
+		if vim.v.count > max_distance then
+			return "m'" .. vim.v.count .. key
+		end
+		return key
+	end, { expr = true })
+end

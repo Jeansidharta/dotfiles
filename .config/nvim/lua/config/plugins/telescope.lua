@@ -116,12 +116,6 @@ function config()
 			},
 		},
 		extensions = {
-			file_browser = {
-				hijack_netrw = true,
-				grouped = true,
-				hidden = true,
-				respect_gitignore = false,
-			},
 			undo = {
 				mappings = {
 					i = {
@@ -160,18 +154,6 @@ return {
 	cmd = { "Telescope" },
 
 	keys = {
-		-- file_browser
-		{
-			"<leader>tf",
-			-- Opens the folder parent to the current buffer.
-			function()
-				require("telescope").extensions.file_browser.file_browser({
-					path = string.gsub(vim.api.nvim_buf_get_name(0), [[/[^/]+$]], [[]]),
-				})
-			end,
-			noremap = true,
-			desc = "Open file browser",
-		},
 		-- Undo tree
 		{ "<leader>tu", "<cmd>Telescope undo<cr>", noremap = true, desc = "Open undo tree" },
 

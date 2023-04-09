@@ -17,9 +17,14 @@ set --export XDG_RUNTIME_DIR "/home/sidharta/.local/run"
 set --export XDG_DOWNLOAD_DIR "$HOME/Downloads"
 set --export XDG_CACHE_HOME "$HOME/.cache"
 
+set --export ZK_NOTEBOOK_DIR "$HOME/notas"
+set --export STARSHIP_CONFIG "$XDG_CONFIG_HOME/starship/starship.toml"
+set --export STARSHIP_CACHE "$XDG_CACHE_HOME/starship"
+
 set --export PAGER "moar"
 set --export EDITOR "vim"
 set --export BROWSER "firefox"
+set --export NODE_OPTIONS "--openssl-legacy-provider"
 
 fish_add_path /home/sidharta/bin
 fish_add_path /home/sidharta/scripts
@@ -35,9 +40,16 @@ function userSV -a dir
     end
 end
 
-alias ls="ls -h --color --time-style \"long-iso\""
+# alias ls="ls -h --color --time-style \"long-iso\""
+alias ls="exa"
 alias config="/usr/bin/git --git-dir=$HOME/dotfiles-repo/ --work-tree=$HOME"
 alias sessionctl="systemctl --user"
 set fish_greeting
 
 fish_vi_key_bindings
+
+# tabtab source for packages
+# uninstall by removing these lines
+[ -f ~/.config/tabtab/__tabtab.fish ]; and . ~/.config/tabtab/__tabtab.fish; or true
+
+starship init fish | source

@@ -22,7 +22,6 @@ return {
 				nls.builtins.code_actions.gitsigns,
 				-- Lua
 				nls.builtins.formatting.stylua,
-				nls.builtins.diagnostics.editorconfig_checker,
 				nls.builtins.diagnostics.selene.with({
 					condition = function(utils)
 						return utils.root_has_file({ "selene.toml" })

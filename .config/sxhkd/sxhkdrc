@@ -53,10 +53,10 @@ alt + control + Escape
 #
 
 # focus the node in the given direction
-alt + {a,s,w,d}
+alt + {Left,Down,Up,Right}
 	/home/sidharta/.config/bspwm/scripts/focus-monocle-aware {west,south,north,east}
 	# bspc node --focus
-alt + shift + {a,s,w,d}
+alt + shift + {Left,Down,Up,Right}
 	bspc node --swap {west,south,north,east}
 
 # focus or send to the given desktop
@@ -108,7 +108,7 @@ alt + bracketleft
 	bspc node @parent --balance
 
 # Preselection actions
-alt + ctrl + {a,w,s,d}
+alt + ctrl + {Left,Up,Down,Right}
 	bspc node --presel-dir \~{west,north,south,east}
 alt + q
 	bspc node --to-node last.!automatic

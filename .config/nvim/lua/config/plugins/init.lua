@@ -265,7 +265,7 @@ return {
 				-- configuration goes here, for example:
 				relculright = true,
 				segments = {
-					{ text = { builtin.foldfunc }, click = "v:lua.ScFa" },
+					{ txt = { builtin.foldfunc }, click = "v:lua.ScFa" },
 					{
 						sign = { name = { "Diagnostic" }, maxwidth = 2, auto = true },
 						click = "v:lua.ScSa",

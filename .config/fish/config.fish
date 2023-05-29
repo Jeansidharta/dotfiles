@@ -26,11 +26,23 @@ set --export EDITOR "vim"
 set --export BROWSER "firefox"
 set --export NODE_OPTIONS "--openssl-legacy-provider"
 
+set --export NVM_DIR "$XDG_CONFIG_HOME/nvm"
+
 fish_add_path /home/sidharta/bin
 fish_add_path /home/sidharta/scripts
 fish_add_path /home/sidharta/.cargo/bin
 fish_add_path /home/sidharta/.local/bin
 fish_add_path /home/sidharta/go/bin
+
+# funced nvm
+# function nvm
+#    bass source ~/.nvm/nvm.sh --no-use ';' nvm $argv
+# end
+
+# if test -s "$NVM_DIR/nvm.sh"
+# bass source "$NVM_DIR/nvm.sh" --no-use ';' nvm use iojs
+# end
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 function userSV -a dir
     begin

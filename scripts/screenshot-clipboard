@@ -1,0 +1,4 @@
+#!/bin/sh
+
+
+xclip -selection clipboard -t image/png /tmp/screenshot

@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Verion=1.0
+Name=Alacritty
+Comment=Alacritty
+Exec=/usr/bin/alacritty

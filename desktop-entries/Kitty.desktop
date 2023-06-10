@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Verion=1.0
+Name=Kitty
+Comment=Kitty terminal emulator
+Exec=/usr/bin/kitty

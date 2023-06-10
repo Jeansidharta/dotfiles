@@ -8,6 +8,8 @@ vim.keymap.set("n", "<leader>s<Up>", ":split<CR><c-w>k<CR>", { noremap = true, d
 vim.keymap.set("n", "<leader>s<Left>", ":vsplit<CR><c-w>h<CR>", { noremap = true, desc = "Split left" })
 vim.keymap.set("n", "<leader>s<Right>", ":vsplit<CR>", { noremap = true, desc = "Split right" })
 
+-- vim.keymap.set("n", "p", "<Plug>(NeoclipYankForward)", { noremap = true, desc = "" })
+
 ------------------ DIAGNOSTICS --------------------
 vim.keymap.set("n", "<leader>dn", vim.diagnostic.goto_next, { noremap = true, desc = "Go to next diagnostics" })
 vim.keymap.set("n", "<leader>dN", vim.diagnostic.goto_prev, { noremap = true, desc = "Go to prev diagnostics" })

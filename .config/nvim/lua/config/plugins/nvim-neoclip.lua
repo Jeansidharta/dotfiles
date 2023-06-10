@@ -1,6 +1,6 @@
 return {
-	-- "AckslD/nvim-neoclip.lua",
-	dir = "~/projects/personal/vim-plugins/nvim-neoclip.lua",
+	"AckslD/nvim-neoclip.lua",
+	-- dir = "~/projects/personal/vim-plugins/nvim-neoclip.lua",
 	event = "BufEnter",
 	dependencies = {
 		"kkharji/sqlite.lua",

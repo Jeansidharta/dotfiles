@@ -107,8 +107,7 @@ return {
 	} },
 	"elkowar/yuck.vim",
 	{
-		-- "stevearc/oil.nvim",
-		dir = "~/projects/personal/vim-plugins/oil.nvim",
+		"stevearc/oil.nvim",
 		config = {
 			columns = {
 				"icon",
@@ -132,18 +131,6 @@ return {
 		},
 	},
 
-	{
-		"weilbith/nvim-code-action-menu",
-		cmd = "CodeActionMenu",
-		keys = {
-			{ "<leader>a", ":CodeActionMenu<CR>", noremap = true, desc = "Open code action menu" },
-		},
-	},
-	{
-		dir = "~/projects/personal/vim-plugins/binary-windows.nvim",
-		event = "VeryLazy",
-		config = true,
-	},
 	{
 		"folke/trouble.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -199,7 +186,7 @@ return {
 						end, bufopts("List workspace folders"))
 						vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, bufopts("Go to type definition"))
 						vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, bufopts("Rename symbol"))
-						vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, bufopts("Code action"))
+						vim.keymap.set("n", "<space>a", vim.lsp.buf.code_action, bufopts("Code action"))
 						vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts("Go to references"))
 
 						rt.inlay_hints.enable()
@@ -308,12 +295,4 @@ return {
 			},
 		},
 	},
-	-- {
-	-- 	"wuelnerdotexe/vim-astro",
-	-- 	lazy = false,
-	-- 	config = function()
-	-- 		vim.g.astro_typescript = "enabled"
-	-- 		vim.g.astro_stylus = "enabled"
-	-- 	end,
-	-- },
 }

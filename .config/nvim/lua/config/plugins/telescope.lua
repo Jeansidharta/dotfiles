@@ -146,8 +146,8 @@ return {
 			build = "make",
 		},
 		{
-			-- "debugloop/telescope-undo.nvim",
-			dir = "~/projects/personal/vim-plugins/telescope-undo.nvim",
+			"debugloop/telescope-undo.nvim",
+			-- dir = "~/projects/personal/vim-plugins/telescope-undo.nvim",
 		},
 	},
 	config = config,

@@ -141,7 +141,8 @@ return {
 	-- { "RaafatTurki/hex.nvim", config = true, lazy = false },
 	{ "nvim-treesitter/playground", lazy = false },
 	{
-		dir = "~/projects/personal/vim-plugins/text-image",
+		"https://github.com/Jeansidharta/ascii-image.nvim",
+		-- dir = "~/projects/personal/vim-plugins/text-image",
 		lazy = false,
 		config = {
 			client = "chafa",
@@ -156,6 +157,17 @@ return {
 
 			rt.setup({
 				server = {
+					settings = {
+						["rust-analyzer"] = {
+							checkOnSave = {
+								enable = true,
+								command = "clippy",
+							},
+							cargo = {
+								allFeatures = true,
+							},
+						},
+					},
 					on_attach = function(_, bufnr)
 						-- Hover actions
 						vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
@@ -267,7 +279,8 @@ return {
 		end,
 	},
 	{
-		dir = "~/projects/personal/vim-plugins/telescope-misc",
+		"https://github.com/Jeansidharta/telescope-misc.nvim",
+		-- dir = "~/projects/personal/vim-plugins/telescope-misc",
 		lazy = false,
 		dependencies = {
 			"nvim-telescope/telescope.nvim",
@@ -295,4 +308,6 @@ return {
 			},
 		},
 	},
+	{ "elkowar/yuck.vim", lazy = false },
+	{ "gpanders/nvim-parinfer", lazy = false },
 }

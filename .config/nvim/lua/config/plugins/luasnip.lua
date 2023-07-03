@@ -48,6 +48,52 @@ function config()
 	-- 		ls.expand_or_jump()
 	-- 	end
 	-- end)
+	--
+	ls.add_snippets("rust", {
+		s("print", {
+			-- t {'println!("'}, i(1), t {' {:?}", '}, i(0), t {');'}}),
+			t({ 'println!("' }),
+			i(1),
+			t({ " {" }),
+			i(0),
+			t({ ':?}");' }),
+		}),
+
+		s("struct", {
+			t({ "#[derive(Debug)]", "" }),
+			t({ "struct " }),
+			i(1),
+			t({ " {", "" }),
+			i(0),
+			t({ "}", "" }),
+		}),
+
+		s("test", {
+			t({ "#[test]", "" }),
+			t({ "fn " }),
+			i(1),
+			t({ "() {", "" }),
+			t({ "	assert" }),
+			i(0),
+			t({ "", "" }),
+			t({ "}" }),
+		}),
+
+		s("testcfg", {
+			t({ "#[cfg(test)]", "" }),
+			t({ "mod tests {", "" }),
+			t({ "	use super::*;", "" }),
+			t({ "	use pretty_assertions::assert_eq;", "" }),
+			t({ "" }),
+			t({ "	#[test]", "" }),
+			t({ "	fn " }),
+			i(0),
+			t({ "() {", "" }),
+			t({ "		assert", "" }),
+			t({ "	}", "" }),
+			t({ "}" }),
+		}),
+	})
 
 	ls.add_snippets("vue", {
 		s("newfile", {
@@ -77,4 +123,13 @@ function config()
 	})
 end
 
-return { "L3MON4D3/LuaSnip", config = config, event = "BufReadPost" }
+return {
+	"L3MON4D3/LuaSnip",
+	config = config,
+	event = "BufReadPost",
+
+	keys = {
+		{ "<leader>zn", "<Plug>luasnip-jump-next", noremap = true, desc = "LuaSnip Next" },
+		{ "<leader>zN", "<Plug>luasnip-jump-prev", noremap = true, desc = "LuaSnip Prev" },
+	},
+}

@@ -1,11 +1,20 @@
 if status is-interactive
     # Commands to run in interactive sessions can go here
+	~/.login
+end
 
-	# Run a login script exactly once
-	if test ! -e /tmp/login-script-executed
-		touch /tmp/login-script-executed
-		exec ~/.login
-	end
+function bw
+    if test ! -e /tmp/bw-token
+        echo 'bw locked - unlocking into a new session'
+		/usr/bin/bw unlock --raw > /tmp/bw-token
+    end
+
+	export BW_SESSION="$(cat /tmp/bw-token)"
+	/usr/bin/bw $argv
+end
+
+function bwy
+	bw $argv | jy
 end
 
 bind \cH backward-kill-word
@@ -17,7 +26,7 @@ set --export XDG_RUNTIME_DIR "/home/sidharta/.local/run"
 set --export XDG_DOWNLOAD_DIR "$HOME/Downloads"
 set --export XDG_CACHE_HOME "$HOME/.cache"
 
-set --export ZK_NOTEBOOK_DIR "$HOME/notas"
+set --export ZK_NOTEBOOK_DIR "$HOME/notes"
 set --export STARSHIP_CONFIG "$XDG_CONFIG_HOME/starship/starship.toml"
 set --export STARSHIP_CACHE "$XDG_CACHE_HOME/starship"
 
@@ -56,6 +65,7 @@ end
 alias ls="exa"
 alias config="/usr/bin/git --git-dir=$HOME/dotfiles-repo/ --work-tree=$HOME"
 alias sessionctl="systemctl --user"
+alias xclip="xclip -selection clipboard"
 set fish_greeting
 
 fish_vi_key_bindings

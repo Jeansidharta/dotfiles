@@ -1,3 +1,3 @@
 #!/bin/sh
 
-exec wallpaper-manager --wallpapers-dir=/home/sidharta/Wallpapers/static select-wallpaper --static
+exec wallpaper-manager --wallpapers-dir=/home/sidharta/wallpapers/static select-wallpaper --static

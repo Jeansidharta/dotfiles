@@ -1,0 +1,8 @@
+cache_dir = "/home/sidharta/.cache"
+wallpapers_dir = "/home/sidharta/wallpapers/live"
+
+resolution.width = 2560
+resolution.height = 1600
+
+offset.x = 1920
+offset.y = 0

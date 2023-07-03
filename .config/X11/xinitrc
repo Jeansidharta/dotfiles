@@ -1,6 +1,12 @@
+# This is optimus-manager related
+# /usr/bin/prime-offload
+
+xrandr --auto
 systemctl --user start xsession.target
 
-setxkbmap -layout us -variant intl
 xrdb -merge "/home/sidharta/.config/X11/xresources"
+
+# setxkbmap -layout us -variant intl
+ [[ -f ~/.config/X11/xmodmap ]] && xmodmap ~/.config/X11/xmodmap
 
 exec bspwm

@@ -35,11 +35,11 @@ XF86AudioNext
 shift + XF86AudioNext
 	mpc next
 XF86AudioLowerVolume
-	amixer set PCM 10%-
+	pactl set-sink-volume @DEFAULT_SINK@ -3%
 XF86AudioRaiseVolume
-	amixer set PCM 10%+
+	pactl set-sink-volume @DEFAULT_SINK@ +3%
 XF86AudioMute
-	amixer set PCM toggle
+	pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 alt + control + 1
 	/home/sidharta/bin/xmenu/general-menu.sh
@@ -54,16 +54,20 @@ alt + control + Escape
 
 # focus the node in the given direction
 alt + {Left,Down,Up,Right}
-	/home/sidharta/.config/bspwm/scripts/focus-monocle-aware {west,south,north,east}
+	/home/sidharta/.config/bspwm/scripts/focus-monocle-aware {west,south,north,east}.local
 	# bspc node --focus
 alt + shift + {Left,Down,Up,Right}
-	bspc node --swap {west,south,north,east}
+	bspc node --swap {west,south,north,east}.local
 
 # focus or send to the given desktop
 alt + {1-9,0}
-	bspc desktop --focus '^{1-9,10}'
+	bspc desktop --focus '{1-9,10}.local'
 alt + shift + {1-9,0}
-	bspc node --to-desktop '^{1-9,10}'
+	bspc node --to-desktop '{1-9,10}.local' --follow
+alt + mod5 + {1,2}
+	bspc monitor --focus {eDP1,HDMI1}
+alt + shift + mod5 + {1,2}
+	bspc node --to-monitor {eDP1,HDMI1} --follow
 
 # close and kill
 alt + F4

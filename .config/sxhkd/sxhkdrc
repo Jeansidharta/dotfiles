@@ -8,7 +8,7 @@ alt + space
 
 # terminal emulator
 alt + Return
-	alacritty
+	wezterm
 
 # Clipboard manager
 # ctrl + alt + v

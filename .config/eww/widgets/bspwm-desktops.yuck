@@ -1,0 +1,37 @@
+(deflisten bspwm_report :initial "[]"
+  `~/.config/eww/scripts/bspwm-desktops-report/target/release/bspwm-desktops-report`)
+
+(defwidget bspwm_desktop [desktop monitor_name is_monitor_focused]
+  (eventbox
+    :onscroll { is_monitor_focused ? "bspc desktop --focus $(test '{}' = 'up' && echo 'next.local') $(test '{}' = 'down' && echo 'prev.local')" : ""}
+    (eventbox
+      :onclick
+        "bspc monitor --focus \"${monitor_name}\" && bspc desktop --focus \"${desktop.name}.local\""
+      :class "desktop-box ${desktop.is_focused ? "focused" : "unfocused"}"
+      {desktop.name})))
+
+(defwidget bspwm_monitor
+  [monitor]
+  (box
+    :class "monitor-box ${monitor.is_focused ? "focused" : "unfocused"}"
+    (eventbox
+      :onscroll "bspc monitor --focus $(test '{}' = 'up' && echo next) $(test '{}' = 'down' && echo prev)"
+      (eventbox :onclick "bspc monitor --focus ${monitor.name}"  {monitor.name}))
+    (box
+      (for desktop in {monitor.desktops}
+        (bspwm_desktop 
+          :desktop desktop
+          :monitor_name {monitor.name}
+          :is_monitor_focused {monitor.is_focused})))))
+  
+
+
+(defwidget 
+  bspwm_monitors 
+  []
+  (box
+    :class "bspwm_monitors_container"
+    :spacing 12
+    (for monitor in bspwm_report
+      (bspwm_monitor :monitor monitor))))
+

@@ -1,0 +1,15 @@
+@use "./widgets/bspwm-desktops";
+@use "./widgets/pulse-audio-volume";
+@use "./colors";
+
+window {
+  font-size: 24px;
+  color: colors.$color-yellow;
+  background-color: transparent;
+}
+
+.main-container {
+  padding: 0 16px;
+  background-color: colors.$color-dark-grey;
+  // background-color: transparent;
+}

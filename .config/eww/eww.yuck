@@ -1,35 +1,47 @@
 (include "./widgets/bspwm-desktops.yuck")           
 (include "./widgets/clock.yuck")
 (include "./widgets/pulse-audio-volume.yuck")
-
+(include "./widgets/wifi-icon.yuck")
+(include "./widgets/wifi-list.yuck")
+(include "./widgets/window-name.yuck")
 
 (defwindow top_bar
     :monitor 0
     :geometry
-        (geometry
-           :x "0%"
-           :y "0px"
-           :width "100%"
-           :height "42px"
-           :anchor "top center")
-    :stacking "fg"
-    :reserve (struts :distance "42px" :side "top")
+    (geometry
+       :x "0%"
+       :y "0px"
+       :width "100%"
+       :height "50px"
+       :anchor "top center")
+    :stacking "bg"
+    :reserve (struts :distance "50px" :side "top")
     :windowtype "dock"
     :wm-ignore false
     (box 
         :class "main-container"
         :space-evenly false
-        (bspwm_monitors) (box :hexpand true) (pulse_audio_volume) (clock)))
+        (bspwm_monitors)
+        (box :style "background-color: transparent;" :hexpand true)
+        ;; (window_name)
+        (box
+          :space-evenly false
+          :spacing 12
+          (wifi_icon)
+          (pulse_audio_volume)
+          (clock))))
 
 (defwindow wifi
   :monitor 0
   :geometry
   (geometry
-    :x "-20px"
+    :x "-12px"
     :y "62px"
     :width "500px"
     :height "500px"
     :anchor "top right")
   :stacking "fg"
   :windowtype "dialog"
-  (box "asdf"))
+  (eventbox
+    :onhoverlost "eww close wifi"
+    (wifi_list)))

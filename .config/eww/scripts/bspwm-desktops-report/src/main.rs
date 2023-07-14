@@ -50,6 +50,7 @@ impl Desktop {
 #[derive(Debug, Serialize)]
 struct Monitor {
     name: String,
+    name_first_letter: char,
     is_focused: bool,
     #[serde(skip)]
     free_and_unfocused_and_unurgent_desktop: Vec<Desktop>,
@@ -60,6 +61,7 @@ struct Monitor {
 impl Monitor {
     fn new_focused(name: String) -> Monitor {
         Monitor {
+            name_first_letter: name.chars().next().unwrap_or('~').to_ascii_uppercase(),
             name,
             is_focused: true,
             occupied_or_focused_or_urgent_desktop: vec![],
@@ -68,6 +70,7 @@ impl Monitor {
     }
     fn new_unfocused(name: String) -> Monitor {
         Monitor {
+            name_first_letter: name.chars().next().unwrap_or('~').to_ascii_uppercase(),
             name,
             is_focused: false,
             occupied_or_focused_or_urgent_desktop: vec![],

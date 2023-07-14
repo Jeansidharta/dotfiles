@@ -1,20 +1,37 @@
 @use "./colors";
 
+@keyframes monitor-select {
+  to {
+    border-color: colors.$color-yellow;
+  }
+}
+
+@keyframes desktop-select {
+  to {
+    border-color: colors.$color-pink;
+  }
+}
+
 .bspwm_monitors_container {
-  button {
-    background-color: transparent;
-    // opacity: 0.5;
+  .desktop-box {
+    &.focused {
+      animation: 500ms 1 forwards desktop-select;
+    }
+    font-size: 24px;
+    border-width: 0 0 1px 0;
+    border-style: solid;
+    border-color: transparent;
   }
 
-  .desktop-box.unfocused * {
-    opacity: 0.7;
-  }
-
-  .desktop-box.focused * {
-    // focus: ;
-  }
-
-  .monitor-box.unfocused {
-    opacity: 0.7;
+  .monitor-box {
+    &.focused {
+      animation: 1000ms 1 forwards monitor-select;
+    }
+    margin: 0px 8px;
+    border-radius: 24px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: transparent;
+    padding: 4px 8px;
   }
 }

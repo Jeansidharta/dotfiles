@@ -3,7 +3,10 @@
 (include "./widgets/pulse-audio-volume.yuck")
 (include "./widgets/wifi-icon.yuck")
 (include "./widgets/wifi-list.yuck")
+(include "./widgets/media.yuck")
+(include "./widgets/power.yuck")
 (include "./widgets/window-name.yuck")
+(include "./widgets/performance.yuck")
 
 (defwindow top_bar
     :monitor 0
@@ -19,17 +22,21 @@
     :windowtype "dock"
     :wm-ignore false
     (box 
+        :spacing 32
         :class "main-container"
         :space-evenly false
         (bspwm_monitors)
         (box :style "background-color: transparent;" :hexpand true)
+        (performance)
+        (media)
         ;; (window_name)
         (box
           :space-evenly false
           :spacing 12
           (wifi_icon)
-          (pulse_audio_volume)
-          (clock))))
+          (pulse_audio_volume))
+        (clock)
+        (power)))
 
 (defwindow wifi
   :monitor 0

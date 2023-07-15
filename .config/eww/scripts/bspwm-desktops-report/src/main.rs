@@ -24,27 +24,7 @@ struct Desktop {
     name: String,
     is_focused: bool,
     is_urgent: bool,
-}
-
-impl Desktop {
-    fn new_focused(name: String) -> Desktop {
-        Desktop {
-            name,
-            is_focused: true,
-            is_urgent: false,
-        }
-    }
-    fn new_unfocused(name: String) -> Desktop {
-        Desktop {
-            name,
-            is_focused: false,
-            is_urgent: false,
-        }
-    }
-    fn mark_as_urgent(mut self) -> Self {
-        self.is_urgent = true;
-        self
-    }
+    is_free: bool,
 }
 
 #[derive(Debug, Serialize)]
@@ -52,10 +32,7 @@ struct Monitor {
     name: String,
     name_first_letter: char,
     is_focused: bool,
-    #[serde(skip)]
-    free_and_unfocused_and_unurgent_desktop: Vec<Desktop>,
-    #[serde(rename = "desktops")]
-    occupied_or_focused_or_urgent_desktop: Vec<Desktop>,
+    desktops: Vec<Desktop>,
 }
 
 impl Monitor {
@@ -64,46 +41,15 @@ impl Monitor {
             name_first_letter: name.chars().next().unwrap_or('~').to_ascii_uppercase(),
             name,
             is_focused: true,
-            occupied_or_focused_or_urgent_desktop: vec![],
-            free_and_unfocused_and_unurgent_desktop: vec![],
+            desktops: vec![],
         }
     }
+
     fn new_unfocused(name: String) -> Monitor {
         Monitor {
-            name_first_letter: name.chars().next().unwrap_or('~').to_ascii_uppercase(),
-            name,
             is_focused: false,
-            occupied_or_focused_or_urgent_desktop: vec![],
-            free_and_unfocused_and_unurgent_desktop: vec![],
+            ..Monitor::new_focused(name)
         }
-    }
-    fn push_occupied_focused_desktop(&mut self, desktop_name: String) {
-        self.occupied_or_focused_or_urgent_desktop
-            .push(Desktop::new_focused(desktop_name))
-    }
-    fn push_occupied_unfocused_desktop(&mut self, desktop_name: String) {
-        self.occupied_or_focused_or_urgent_desktop
-            .push(Desktop::new_unfocused(desktop_name));
-    }
-
-    fn push_free_focused_desktop(&mut self, desktop_name: String) {
-        self.occupied_or_focused_or_urgent_desktop
-            .push(Desktop::new_focused(desktop_name));
-    }
-
-    fn push_free_unfocused_desktop(&mut self, desktop_name: String) {
-        self.free_and_unfocused_and_unurgent_desktop
-            .push(Desktop::new_unfocused(desktop_name));
-    }
-
-    fn push_urgent_focused_desktop(&mut self, desktop_name: String) {
-        self.occupied_or_focused_or_urgent_desktop
-            .push(Desktop::new_focused(desktop_name).mark_as_urgent());
-    }
-
-    fn push_urgent_unfocused_desktop(&mut self, desktop_name: String) {
-        self.occupied_or_focused_or_urgent_desktop
-            .push(Desktop::new_unfocused(desktop_name).mark_as_urgent());
     }
 }
 
@@ -150,36 +96,62 @@ fn main() -> Result<()> {
                     ReportItem::UnfocusedMonitor(name) => {
                         monitors.push(Monitor::new_unfocused(name))
                     }
-                    ReportItem::OccupiedFocusedDesktop(name) => monitors
-                        .last_mut()
-                        .unwrap()
-                        .push_occupied_focused_desktop(name),
-                    ReportItem::OccupiedUnfocusedDesktop(name) => monitors
-                        .last_mut()
-                        .unwrap()
-                        .push_occupied_unfocused_desktop(name),
-
-                    ReportItem::FreeFocusedDesktop(name) => {
-                        monitors.last_mut().unwrap().push_free_focused_desktop(name)
+                    ReportItem::OccupiedFocusedDesktop(name) => {
+                        monitors.last_mut().unwrap().desktops.push(Desktop {
+                            name,
+                            is_focused: true,
+                            is_urgent: false,
+                            is_free: false,
+                        })
                     }
-                    ReportItem::FreeUnfocusedDesktop(name) => monitors
-                        .last_mut()
-                        .unwrap()
-                        .push_free_unfocused_desktop(name),
-                    ReportItem::UrgentFocusedDesktop(name) => monitors
-                        .last_mut()
-                        .unwrap()
-                        .push_urgent_focused_desktop(name),
-                    ReportItem::UrgentUnfocusedDesktop(name) => monitors
-                        .last_mut()
-                        .unwrap()
-                        .push_urgent_unfocused_desktop(name),
+                    ReportItem::OccupiedUnfocusedDesktop(name) => {
+                        monitors.last_mut().unwrap().desktops.push(Desktop {
+                            name,
+                            is_focused: false,
+                            is_urgent: false,
+                            is_free: false,
+                        })
+                    }
+                    ReportItem::FreeFocusedDesktop(name) => {
+                        monitors.last_mut().unwrap().desktops.push(Desktop {
+                            name,
+                            is_focused: true,
+                            is_urgent: false,
+                            is_free: true,
+                        })
+                    }
+                    ReportItem::FreeUnfocusedDesktop(name) => {
+                        monitors.last_mut().unwrap().desktops.push(Desktop {
+                            name,
+                            is_focused: false,
+                            is_urgent: false,
+                            is_free: true,
+                        })
+                    }
+                    ReportItem::UrgentFocusedDesktop(name) => {
+                        monitors.last_mut().unwrap().desktops.push(Desktop {
+                            name,
+                            is_focused: true,
+                            is_urgent: true,
+                            is_free: false,
+                        })
+                    }
+                    ReportItem::UrgentUnfocusedDesktop(name) => {
+                        monitors.last_mut().unwrap().desktops.push(Desktop {
+                            name,
+                            is_focused: false,
+                            is_urgent: true,
+                            is_free: false,
+                        })
+                    }
+
                     ReportItem::LayoutOfFocusedDesktop(_) => {}
                     ReportItem::StateOfFocusedNode(_) => {}
                     ReportItem::ActiveFlagsOfFocuesdNode(_) => {}
                 })
                 .count();
 
+            monitors.sort_by(|a, b| b.name.cmp(&a.name));
             println!("{}", serde_json::to_string(&monitors).unwrap());
         });
     }

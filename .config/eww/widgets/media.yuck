@@ -1,0 +1,43 @@
+(defvar show_media true)
+(deflisten status :initial "" "playerctl --follow status")
+(deflisten title :initial "" "playerctl --follow metadata title")
+(deflisten icon :initial "" "~/.config/eww/scripts/media-image/target/release/media-image")
+
+(defwidget media
+  []
+  (box
+    :visible show_media
+    :space-evenly false
+    :spacing 12
+    :style "background-color: #303030; border: 1px solid rgba(0, 0, 0, 0.7); padding: 0 8px; border-radius: 8px"
+    (image
+      :path "./music-note.svg"
+      :image-width 30
+      :image-height 30)
+      
+    ;; (image :path icon :image-width 40 :image-height 40)
+    (overlay
+      (box :width 400)
+      (box :width 400 :halign "start" :space-evenly false title))
+    (box
+      (eventbox
+        :cursor "pointer"
+        :onclick "playerctl previous"
+        (image
+          :path "./fast-rewind.svg"
+          :image-width 30
+          :image-height 30))
+      (eventbox
+        :cursor "pointer"
+        :onclick "playerctl ${status == "Playing" ? "pause" : "play"}"
+        (image
+          :path {status == "Playing"  ? "./pause.svg" : "./play.svg"}
+          :image-width 40
+          :image-height 40))
+      (eventbox
+        :cursor "pointer"
+        :onclick "playerctl next"
+        (image
+          :path "./fast-forward.svg"
+          :image-width 30
+          :image-height 30)))))

@@ -3,15 +3,18 @@
 
 (defwidget bspwm_desktop [desktop monitor_name is_monitor_focused]
   (eventbox
+    :cursor "pointer"
     :onscroll { is_monitor_focused ? "bspc desktop --focus $(test '{}' = 'up' && echo 'next.local') $(test '{}' = 'down' && echo 'prev.local')" : ""}
-    (eventbox
-      ;; :style "border: 1px solid red;"
+    :onclick
+      "bspc monitor --focus \"${monitor_name}\" && bspc desktop --focus \"${desktop.name}.local\""
+    :class "desktop-box ${desktop.is_focused ? "focused" : "unfocused"} ${desktop.is_free ? "free" : "unfree"} ${desktop.is_urgent ? "urgent" : "unurgent"}"
+    (box
+      :width 10
+      :height 10
+      :space-evenly false
       :halign "start"
-      :width 20
-      :onclick
-        "bspc monitor --focus \"${monitor_name}\" && bspc desktop --focus \"${desktop.name}.local\""
-      :class "desktop-box ${desktop.is_focused ? "focused" : "unfocused"}"
-      {desktop.name})))
+      :valign "start")))
+      ;; :style "border: 1px solid red")))
 
 (defwidget bspwm_monitor
   [monitor]
@@ -19,20 +22,60 @@
     :space-evenly false
     :spacing 12
     :class "monitor-box ${monitor.is_focused ? "focused" : "unfocused"}"
-    (eventbox
-      :onscroll "bspc monitor --focus $(test '{}' = 'up' && echo next) $(test '{}' = 'down' && echo prev)"
-      (eventbox
-        :onclick "bspc monitor --focus ${monitor.name}"
-        (image
-          :path "./monitor.svg"
-          :image-width 30
-          :image-height 30)))
     (box
+      :width 30
+      :height 30
+      :valign "center"
+      :orientation "vertical"
       :space-evenly false
-      :spacing 2
-      (for desktop in {monitor.desktops}
+      :class "desktop-container"
+      :spacing 1
+      (box
+        :width 30
+        :spacing 1
+        :space-evenly false
         (bspwm_desktop 
-          :desktop desktop
+          :desktop {monitor.desktops[6]}
+          :monitor_name {monitor.name}
+          :is_monitor_focused {monitor.is_focused})
+        (bspwm_desktop 
+          :desktop {monitor.desktops[7]}
+          :monitor_name {monitor.name}
+          :is_monitor_focused {monitor.is_focused})
+        (bspwm_desktop 
+          :desktop {monitor.desktops[8]}
+          :monitor_name {monitor.name}
+          :is_monitor_focused {monitor.is_focused}))
+      (box
+        :width 30
+        :space-evenly false
+        :spacing 1
+        (bspwm_desktop 
+          :desktop {monitor.desktops[3]}
+          :monitor_name {monitor.name}
+          :is_monitor_focused {monitor.is_focused})
+        (bspwm_desktop 
+          :desktop {monitor.desktops[4]}
+          :monitor_name {monitor.name}
+          :is_monitor_focused {monitor.is_focused})
+        (bspwm_desktop 
+          :desktop {monitor.desktops[5]}
+          :monitor_name {monitor.name}
+          :is_monitor_focused {monitor.is_focused}))
+      (box
+        :width 30
+        :space-evenly false
+        :spacing 1
+        (bspwm_desktop 
+          :desktop {monitor.desktops[0]}
+          :monitor_name {monitor.name}
+          :is_monitor_focused {monitor.is_focused})
+        (bspwm_desktop 
+          :desktop {monitor.desktops[1]}
+          :monitor_name {monitor.name}
+          :is_monitor_focused {monitor.is_focused})
+        (bspwm_desktop 
+          :desktop {monitor.desktops[2]}
           :monitor_name {monitor.name}
           :is_monitor_focused {monitor.is_focused})))))
   
@@ -43,7 +86,7 @@
   []
   (box
     :class "bspwm_monitors_container"
-    ;; :spacing 12
+    :spacing 12
     :space-evenly false
     (for monitor in bspwm_report
       (bspwm_monitor :monitor monitor))))

@@ -35,7 +35,7 @@
           ;; :orientation "v"
           :spacing -8
           (image
-            :path {volume_info.is_muted ? "./volume-off.svg" : "./volume.svg"}
+            :path {volume_info.is_muted ? "./icons/volume-off.svg" : "./icons/volume.svg"}
             :image-width 30
             :image-height 30
             :class "icon"))))))

@@ -4,7 +4,7 @@
   (eventbox
     :cursor "pointer"
     (image
-      :style "box-; border-radius: 100%; padding: 0 4px;"
-      :path "./power.svg"
-      :image-width 40 
-      :image-height 40))) 
+      :style "border-radius: 100%; padding: 0 4px;"
+      :path "./icons/power.svg"
+      :image-width 30 
+      :image-height 30))) 

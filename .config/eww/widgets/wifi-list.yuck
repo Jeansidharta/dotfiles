@@ -19,7 +19,7 @@
       :spacing 12
       :width 500
       (literal :content "(box :width 4 :class \"network-item-strength-ball\" :style \"background-color: ${wifi_network.signal_strength_color};\" \"\")")
-      (image :visible {wifi_network.security != ""} :path "./lock.svg" :image-width 20 :image-height 20)
+      (image :visible {wifi_network.security != ""} :path "./icons/lock.svg" :image-width 20 :image-height 20)
        
       (box :halign "start" {wifi_network.ssid}))))
 
@@ -54,7 +54,7 @@
         :onclick "eww update searching_for_wifi=true"
         (image 
           :style "margin: 16px 0;"
-          :path "./refresh.svg" :image-width 30 :image-height 30))
+          :path "./icons/refresh.svg" :image-width 30 :image-height 30))
       (checkbox)
       (eventbox
         :halign "start"
@@ -62,7 +62,7 @@
         :onclick "eww update searching_for_wifi=true"
         (image 
           :style "margin: 16px 0;"
-          :path "./refresh.svg" :image-width 30 :image-height 30)))
+          :path "./icons/refresh.svg" :image-width 30 :image-height 30)))
     (wifi_selected)
     (scroll
       :vscroll true

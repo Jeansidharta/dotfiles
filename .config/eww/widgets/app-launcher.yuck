@@ -1,0 +1,14 @@
+(defwidget app
+  [icon executable]
+  (eventbox
+    :cursor "pointer"
+    :onclick executable
+    (image :path icon :image-width 30 :image-height 30)))
+
+(defwidget app_launcher
+  []
+  (box
+    :spacing 12
+    (app :icon "./icons/terminal.svg" :executable "wezterm")
+    (app :icon "./icons/neovim.svg" :executable "wezterm start vim")
+    (app :icon "./icons/firefox.svg" :executable "firefox")))

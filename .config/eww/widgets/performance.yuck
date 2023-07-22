@@ -9,25 +9,20 @@
     (box
       :space-evenly false
       :spacing 4
-      (image :path "./battery-charging.svg" :image-width 30 :image-height 30)
-      "${round(EWW_BATTERY.BAT0.capacity, 0)}%")
-    (box
-      :space-evenly false
-      :spacing 4
-      (image :path "./processor.svg" :image-width 30 :image-height 30)
+      (image :path "./icons/processor.svg" :image-width 30 :image-height 30)
       "${round(EWW_CPU.avg, 0)}%")
     (box
       :space-evenly false
       :spacing 4
-      (image :path "./ram.svg" :image-width 30 :image-height 30)
+      (image :path "./icons/ram.svg" :image-width 30 :image-height 30)
       "${round(EWW_RAM.used_mem_perc, 0)}%")
     (box
       :space-evenly false
       :spacing 4
-      (image :path "./storage.svg" :image-width 30 :image-height 30)
+      (image :path "./icons/storage.svg" :image-width 30 :image-height 30)
       "${round(EWW_DISK["/"].used_perc, 0)}%")
     (box
       :space-evenly false
       :spacing 4
-      (image :path "./termometer.svg" :image-width 30 :image-height 30)
+      (image :path "./icons/termometer.svg" :image-width 30 :image-height 30)
       "${round(EWW_TEMPS.CORETEMP_CORE_0, 0)}°C")))

@@ -47,9 +47,9 @@
       (bspwm_monitors))
     (backdrop :bar_type bar_type
       (app_launcher))
-    (box :style "background-color: transparent;" :hexpand true)
     (backdrop :bar_type bar_type
       (performance))
+    (box :style "background-color: transparent;" :hexpand true)
     (backdrop :bar_type bar_type
       (media))
     (backdrop :bar_type bar_type
@@ -93,6 +93,21 @@
     :windowtype "dock"
     :wm-ignore false
     (top_bar :bar_type "solid"))
+
+(defwindow calendar
+  :monitor 0
+  :geometry
+  (geometry
+    :x "-12px"
+    :y "62px"
+    :width "500px"
+    :height "500px"
+    :anchor "top right")
+  :stacking "fg"
+  :windowtype "dialog"
+  (eventbox
+    :onhoverlost "eww close calendar"
+    (calendar)))
 
 (defwindow wifi
   :monitor 0

@@ -1,10 +1,24 @@
+(defvar power_open false)
 
 (defwidget power
   []
   (eventbox
     :cursor "pointer"
-    (image
-      :style "border-radius: 100%; padding: 0 4px;"
-      :path "./icons/power.svg"
-      :image-width 30 
-      :image-height 30))) 
+    :onhover "eww update power_open=true"
+    :onhoverlost "eww update power_open=false"
+    (box
+      :space-evenly false
+      (revealer
+        :reveal power_open
+        :transition "slideleft"
+        (box 
+          (image
+            :style "border-radius: 100%; padding: 0 4px;"
+            :path "./icons/restart.svg"
+            :image-width 30 
+            :image-height 30))) 
+      (image
+        :style "border-radius: 100%; padding: 0 4px;"
+        :path "./icons/power.svg"
+        :image-width 30 
+        :image-height 30)))) 

@@ -1,6 +1,5 @@
 (include "./widgets/bspwm-desktops.yuck")
 (include "./widgets/battery.yuck")
-(include "./widgets/app-launcher.yuck")
 (include "./widgets/launcher.yuck")
 (include "./widgets/clock.yuck")
 (include "./widgets/pulse-audio-volume.yuck")
@@ -27,10 +26,11 @@
     (launcher))
 
 (defwidget backdrop
-  [bar_type]
+  [bar_type ?hexpand]
   (box 
     :space-evenly false
     :spacing 12
+    :hexpand {hexpand ?: false}
     :class "backdrop ${bar_type == "solid" ? "solid" : "split"}"
     (children)))
 
@@ -41,15 +41,15 @@
   (box 
     :visible show_bar
     :spacing 32
+    :width 1920
     :class "main-container ${bar_type == "solid" ? "solid" : "split"}"
     :space-evenly false
     (backdrop :bar_type bar_type
       (bspwm_monitors))
     (backdrop :bar_type bar_type
-      (app_launcher))
-    (backdrop :bar_type bar_type
       (performance))
-    (box :style "background-color: transparent;" :hexpand true)
+    (backdrop :hexpand true :bar_type bar_type
+      (window_name))
     (backdrop :bar_type bar_type
       (media))
     (backdrop :bar_type bar_type
@@ -108,6 +108,30 @@
   (eventbox
     :onhoverlost "eww close calendar"
     (calendar)))
+
+(defwindow shutdown
+  :monitor 0
+  :geometry
+  (geometry
+    :x "-12px"
+    :y "62px"
+    :width "500px"
+    :height "500px"
+    :anchor "center center")
+  :stacking "fg"
+  :windowtype "dialog"
+  (eventbox
+    :onhoverlost "eww close shutdown"
+    (box
+      :style "background-color: #303030"
+      :orientation "vertical"
+      (box
+        :valign "start"
+        "Are you sure you want do shut down?")
+      (box
+        (button "No")
+        (button "Yes")))))
+
 
 (defwindow wifi
   :monitor 0

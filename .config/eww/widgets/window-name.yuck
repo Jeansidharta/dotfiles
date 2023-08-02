@@ -1,3 +1,7 @@
-;; (deflisten current_window :initial "" "xprop -spy -root _NET_CURRENT_DESKTOP")
+(deflisten current_window :initial "" "~/.config/eww/scripts/window-title-watcher/target/release/window-title-watcher")
 
-(defwidget window_name [] "window_name")
+(defwidget window_name [] 
+  (scroll
+    :hexpand true
+    (box
+      current_window)))

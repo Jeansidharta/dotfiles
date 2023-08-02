@@ -17,8 +17,11 @@
             :path "./icons/restart.svg"
             :image-width 30 
             :image-height 30))) 
-      (image
-        :style "border-radius: 100%; padding: 0 4px;"
-        :path "./icons/power.svg"
-        :image-width 30 
-        :image-height 30)))) 
+      (eventbox
+        :cursor "pointer"
+        :onclick "eww open shutdown"
+        (image
+          :style "border-radius: 100%; padding: 0 4px;"
+          :path "./icons/power.svg"
+          :image-width 30 
+          :image-height 30))))) 

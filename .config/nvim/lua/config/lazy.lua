@@ -13,11 +13,13 @@ end
 vim.opt.runtimepath:prepend(lazypath)
 
 return require("lazy").setup("config.plugins", {
+
+	dev = {
+		path = "~/projects/personal/neovim-plugins",
+		fallback = true,
+	},
 	defaults = {
 		lazy = true,
-		dev = {
-			path = "~/projects/personal/vim-plugins",
-		},
 		change_detection = {
 			notify = false,
 		},

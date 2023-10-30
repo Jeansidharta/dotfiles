@@ -75,3 +75,6 @@ fish_vi_key_bindings
 [ -f ~/.config/tabtab/__tabtab.fish ]; and . ~/.config/tabtab/__tabtab.fish; or true
 
 starship init fish | source
+
+# opam configuration
+source /home/sidharta/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true

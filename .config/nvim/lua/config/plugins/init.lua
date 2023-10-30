@@ -2,6 +2,7 @@ return {
 	{
 		"jeansidharta/tokyodark.nvim",
 		lazy = false,
+		dev = true,
 		priority = 1000,
 		config = function()
 			-- load the colorscheme here
@@ -9,11 +10,9 @@ return {
 			vim.cmd([[colorscheme tokyodark]])
 		end,
 	},
-	"tomasiser/vim-code-dark",
+	-- Backup theme
+	-- "tomasiser/vim-code-dark",
 	{ "kyazdani42/nvim-web-devicons", name = "web-devicons" },
-
-	{ "norcalli/nvim-colorizer.lua", config = true, event = "BufReadPost" },
-
 	{
 		"rcarriga/nvim-notify",
 		dependencies = {
@@ -26,36 +25,18 @@ return {
 			vim.notify = require("notify")
 		end,
 	},
-	{ "j-hui/fidget.nvim", config = true, event = "BufEnter" },
-	{ "kylechui/nvim-surround", config = true, event = "VeryLazy" },
-	{ "numToStr/Comment.nvim", config = true, keys = {
-		"gcc",
-		"gbc",
-	} },
-	{ "tpope/vim-fugitive", event = "BufEnter" },
-	{ "karb94/neoscroll.nvim", config = true, event = "VeryLazy" },
-	{ "akinsho/git-conflict.nvim", config = true, event = "BufReadPre" },
+	{ "j-hui/fidget.nvim",            config = true,        event = "BufEnter", tag = "legacy" },
+	{ "kylechui/nvim-surround",       config = true,        event = "VeryLazy" },
 	{
-		"Jeansidharta/telescope-git",
-		dependencies = {
-			"nvim-telescope/telescope.nvim",
-		},
-		config = function()
-			require("telescope").load_extension("telescope_git")
-		end,
+		"numToStr/Comment.nvim",
+		config = true,
+		keys = {
+			"gcc",
+			"gbc",
+		}
 	},
-	{
-		"Jeansidharta/duck.nvim",
-		config = function()
-			vim.keymap.set("n", "<leader>dd", function()
-				require("duck").hatch("D")
-			end, {})
-			vim.keymap.set("n", "<leader>dk", function()
-				require("duck").cook()
-			end, {})
-		end,
-	},
-
+	{ "tpope/vim-fugitive",        event = "BufEnter" },
+	{ "akinsho/git-conflict.nvim", config = true,     event = "BufReadPre" },
 	{
 		"glts/vim-radical",
 		dependencies = {
@@ -102,10 +83,13 @@ return {
 		},
 	},
 	{ "EtiamNullam/deferred-clipboard.nvim", lazy = false, config = true },
-	{ "chrisgrieser/nvim-various-textobjs", event = "VeryLazy", config = {
-		useDefaultKeymaps = true,
-	} },
-	"elkowar/yuck.vim",
+	{
+		"chrisgrieser/nvim-various-textobjs",
+		event = "VeryLazy",
+		config = {
+			useDefaultKeymaps = true,
+		}
+	},
 	{
 		"stevearc/oil.nvim",
 		config = {
@@ -138,17 +122,6 @@ return {
 			require("trouble").setup({})
 		end,
 	},
-	-- { "RaafatTurki/hex.nvim", config = true, lazy = false },
-	{ "nvim-treesitter/playground", lazy = false },
-	{
-		"https://github.com/Jeansidharta/ascii-image.nvim",
-		-- dir = "~/projects/personal/vim-plugins/text-image",
-		lazy = false,
-		config = {
-			client = "chafa",
-			auto_open_on_image = true,
-		},
-	},
 	{
 		"simrat39/rust-tools.nvim",
 		lazy = false,
@@ -162,13 +135,27 @@ return {
 							checkOnSave = {
 								enable = true,
 								command = "clippy",
+								-- allTargets = false,
 							},
 							cargo = {
 								allFeatures = true,
 							},
+							diagnostics = { experimental = { enable } },
+							hover = { actions = { references = { enable = true } } },
+							imports = { granularity = { enforce = true } },
+							inlayHints = {
+								maxLength = nil,
+								reborrowHints = { enable = "always" },
+								expressionAdjustmentHints = { enable = "always" },
+								discriminantHints = { enable = "always" },
+								closureReturnTypeHints = { enable = "always" },
+								closureCaptureHints = { enable = true },
+								bindingModeHints = { enable = true },
+							},
 						},
 					},
 					on_attach = function(_, bufnr)
+						vim.print("Attached")
 						-- Hover actions
 						vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
 						-- Code action groups
@@ -217,7 +204,7 @@ return {
 				noremap = true,
 				desc = "Create new ZK note",
 			},
-			{ "<leader>/t", "<Cmd>ZkTags<CR>", noremap = true, desc = "Search for ZK tags" },
+			{ "<leader>/t", "<Cmd>ZkTags<CR>",                            noremap = true, desc = "Search for ZK tags" },
 			{ "<leader>/o", "<Cmd>ZkNotes { sort = { 'modified' } }<CR>", noremap = true, desc = "Open ZK notes" },
 			{
 				"<leader>/f",
@@ -255,59 +242,52 @@ return {
 			})
 		end,
 	},
-	{ "lukas-reineke/virt-column.nvim", lazy = false, config = { char = "▏" } },
+	-- { "lukas-reineke/virt-column.nvim", lazy = false, config = { char = "▏" } },
+	{ "elkowar/yuck.vim",                    lazy = false },
 	{
-		"luukvbaal/statuscol.nvim",
+		"gpanders/nvim-parinfer",
+		lazy = false,
 		config = function()
-			local builtin = require("statuscol.builtin")
-			require("statuscol").setup({
-				-- configuration goes here, for example:
-				relculright = true,
-				segments = {
-					{ txt = { builtin.foldfunc }, click = "v:lua.ScFa" },
-					{
-						sign = { name = { "Diagnostic" }, maxwidth = 2, auto = true },
-						click = "v:lua.ScSa",
-					},
-					{ text = { builtin.lnumfunc }, click = "v:lua.ScLa" },
-					{
-						sign = { name = { ".*" }, maxwidth = 2, colwidth = 1, auto = true },
-						click = "v:lua.ScSa",
-					},
-				},
-			})
+			vim.g.parinfer_mode = "smart"
 		end,
 	},
 	{
-		"https://github.com/Jeansidharta/telescope-misc.nvim",
-		-- dir = "~/projects/personal/vim-plugins/telescope-misc",
-		lazy = false,
-		dependencies = {
-			"nvim-telescope/telescope.nvim",
-		},
-		config = function()
-			require("telescope").load_extension("telescope-misc")
-		end,
-
+		"gbprod/substitute.nvim",
+		config = true,
 		keys = {
 			{
-				"<leader>te",
+				"<Leader>r",
 				function()
-					require("telescope-misc").extensions({}, "telescope-misc")
+					require("substitute").operator()
 				end,
-				desc = "Telescope open extension",
 				noremap = true,
+				desc = "Substitution operator",
 			},
 			{
-				"<leader>ts",
+				"<Leader>rr",
 				function()
-					require("telescope-misc").syntax()
+					require("substitute").line()
 				end,
-				desc = "Telescope open extension",
 				noremap = true,
+				desc = "Substitute line with register",
+			},
+			{
+				"<Leader>R",
+				function()
+					require("substitute").eol()
+				end,
+				noremap = true,
+				desc = "Substitute util eol with register",
 			},
 		},
 	},
-	{ "elkowar/yuck.vim", lazy = false },
-	{ "gpanders/nvim-parinfer", lazy = false },
+	{
+		'kwkarlwang/bufjump.nvim',
+		lazy = false,
+		config = {
+			forward = "<C-i>",
+			backward = "<C-o>",
+			on_success = nil
+		},
+	}
 }

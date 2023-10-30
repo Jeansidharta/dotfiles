@@ -1,8 +1,8 @@
-function config()
+local function config()
 	vim.o.completeopt = "menu,menuone,noselect"
 
 	local cmp = require("cmp")
-
+	local compare = cmp.config.compare
 	cmp.setup({
 		snippet = {
 			-- REQUIRED - you must specify a snippet engine
@@ -13,25 +13,65 @@ function config()
 				-- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
 			end,
 		},
-		window = {
-			-- completion = cmp.config.window.bordered(),
-			-- documentation = cmp.config.window.bordered(),
-		},
 		mapping = cmp.mapping.preset.insert({
 			["<C-b>"] = cmp.mapping.scroll_docs(-4),
 			["<C-f>"] = cmp.mapping.scroll_docs(4),
-			["<C-Space>"] = cmp.mapping.complete(),
-			["<C-e>"] = cmp.mapping.abort(),
-			["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+			["<C-Space>"] = function()
+				if cmp.visible() then
+					-- cmp.mapping.confirm({ select = true })
+					cmp.confirm({ select = true })
+				else
+					cmp.complete()
+				end
+			end,
+			-- ["<Esc>"] = cmp.mapping.abort(),
+			["<C-d>"] = function(fallback)
+				if cmp.visible() then
+					cmp.select_next_item()
+					cmp.select_next_item()
+					cmp.select_next_item()
+					cmp.select_next_item()
+					cmp.select_next_item()
+					cmp.select_next_item()
+					cmp.select_next_item()
+					cmp.select_next_item()
+				else
+					fallback()
+				end
+			end,
+			["<C-u>"] = function(fallback)
+				if cmp.visible() then
+					cmp.select_prev_item()
+					cmp.select_prev_item()
+					cmp.select_prev_item()
+					cmp.select_prev_item()
+					cmp.select_prev_item()
+					cmp.select_prev_item()
+					cmp.select_prev_item()
+					cmp.select_prev_item()
+				else
+					fallback()
+				end
+			end,
 		}),
+		sorting = {
+			comparators = {
+				compare.kind,
+				compare.offset,
+				compare.exact,
+				-- compare.scopes,
+				compare.score,
+				compare.recently_used,
+				compare.locality,
+				-- compare.sort_text,
+				compare.length,
+				compare.order,
+			},
+		},
 		sources = cmp.config.sources({
-			{ name = "nvim_lsp" },
-			-- { name = "vsnip" }, -- For vsnip users.
-			{ name = "luasnip" }, -- For luasnip users.
-			-- { name = 'ultisnips' }, -- For ultisnips users.
-			-- { name = 'snippy' }, -- For snippy users.
-		}, {
-			{ name = "buffer" },
+			{ name = "nvim_lsp", priority = 300 },
+			{ name = "buffer", priority = 200 },
+			{ name = "luasnip", priority = 100 },
 		}),
 	})
 

@@ -1,9 +1,9 @@
 # defaults.ctl.!card "PCH"
-defaults.pcm.!card "PCH"
-defaults.pcm.device 0
+# defaults.pcm.!card "PCH"
+# defaults.pcm.device 0
 # defaults.pcm.dmix.!card 1
 # defaults.pcm.dmix.!device 0
-defaults.ctl.card 1
+# defaults.ctl.card 1
 
 # pcm_slave.webcam {
 # 	pcm {

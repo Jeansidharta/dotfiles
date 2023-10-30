@@ -49,6 +49,13 @@ function config()
 	-- 	end
 	-- end)
 	--
+	ls.add_snippets("markdown", {
+		s("`", {
+			t({ '```' }),
+			i(1),
+			t({ "", "", '```' })
+		})
+	})
 	ls.add_snippets("rust", {
 		s("print", {
 			-- t {'println!("'}, i(1), t {' {:?}", '}, i(0), t {');'}}),

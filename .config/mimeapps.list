@@ -6,6 +6,7 @@ text/=firefox.desktop
 text/asd=firefox.desktop
 text/mml=firefox.desktop
 text/*=firefox.desktop
+image/*=sxiv.desktop
 x-scheme-handler/http=firefox.desktop
 x-scheme-handler/https=firefox.desktop
 x-scheme-handler/about=firefox.desktop

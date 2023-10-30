@@ -63,7 +63,6 @@ function config()
 	})
 
 	require("nvim-treesitter").define_modules({
-
 		attach = function(bufnr, lang)
 			print("Attached to " .. bufnr .. " as " .. lang)
 		end,
@@ -78,10 +77,10 @@ function config()
 
 	-- reloads all folds. This is due to a bug. See:
 	-- https://github.com/nvim-telescope/telescope.nvim/issues/699
-	vim.api.nvim_create_autocmd({ "BufEnter" }, {
-		pattern = { "*" },
-		command = "normal zxzR",
-	})
+	-- vim.api.nvim_create_autocmd({ "BufEnter" }, {
+	-- 	pattern = { "*" },
+	-- 	command = "normal zxzR",
+	-- })
 end
 
 return {

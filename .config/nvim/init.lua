@@ -1,6 +1,7 @@
 require("config.settings")
 require("config.lazy")
 require("config.keymaps")
+require("config.zk")
 
 local function script_path()
 	local str = debug.getinfo(2, "S").source:sub(2)

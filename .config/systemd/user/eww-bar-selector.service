@@ -1,0 +1,11 @@
+[Unit]
+Description=Eww bar selector
+Requires=eww.service
+
+[Service]
+ExecStart=/home/sidharta/scripts/bar-selector/target/release/bar-selector
+EnvironmentFile=/home/sidharta/.config/systemd/env
+KillMode=process
+
+[Install]
+WantedBy=bspwm-session.target

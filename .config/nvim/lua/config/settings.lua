@@ -1,10 +1,25 @@
+local utils = require("config.utils")
 vim.g.mapleader = " "
+vim.opt.equalprg = "sh"
 
 vim.cmd([[filetype plugin on]])
 
 vim.opt.jumpoptions:append("stack")
 
 vim.opt.colorcolumn:append("100")
+
+-- Sign Column
+vim.opt.fillchars:append("foldclose:▾")
+vim.opt.fillchars:append("foldopen:▸")
+vim.opt.fillchars:append("foldsep: ")
+vim.opt.fillchars:append("eob: ")
+
+vim.fn.sign_define({
+	{ name = "DiagnosticSignError", text = "⚠", texthl = "DiagnosticError" },
+	{ name = "DiagnosticSignWarn", text = "⚠", texthl = "DiagnosticWarn" },
+	{ name = "DiagnosticSignInfo", text = "?", texthl = "DiagnosticInfo" },
+	{ name = "DiagnosticSignHint", text = "?", texthl = "DiagnosticHint" },
+})
 
 ------------ Undo file --------------
 local undo_dir = vim.fn.stdpath("data") .. "/undofiles"
@@ -27,7 +42,7 @@ vim.o.bomb = false
 ------------ Search options ----------
 vim.o.hlsearch = true
 vim.o.wrapscan = true
-vim.o.incsearch = false
+vim.o.incsearch = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
 vim.o.infercase = true
@@ -40,12 +55,6 @@ vim.o.infercase = true
 ------------ Tab size config ----------
 vim.o.tabstop = 4
 vim.o.shiftwidth = 4
-
------------- Line Column line highlighting ----------
--- vim.o.cursorline = true
--- vim.o.cursorcolumn = true
--- vim.api.nvim_set_hl(0, "EndOfBuffer", { bold = true, bg = "#202020" })
--- vim.api.nvim_set_hl(0, "CursorColumn", { bold = true, bg = "NONE" })
 
 ------------ Timeout ----------
 vim.o.timeout = false
@@ -68,10 +77,6 @@ vim.o.termguicolors = true
 vim.o.equalalways = false
 --Makes so some plugins work better
 vim.o.updatetime = 300
-
---For working with the Treesitter plugin
-vim.o.foldmethod = "expr"
-vim.o.foldexpr = "nvim_treesitter#foldexpr()"
 
 local file_type_tab_stop_setter_group = vim.api.nvim_create_augroup("FileTypeTabStopSetter", { clear = true })
 
@@ -129,3 +134,39 @@ for _, key in pairs({ "<Down>", "<Up>", "j", "k" }) do
 		return key
 	end, { expr = true })
 end
+
+
+---------------------------------------------------
+
+local custom_sql_group = vim.api.nvim_create_augroup("custom_sql", { clear = true })
+
+vim.api.nvim_create_autocmd("filetype", {
+	group = custom_sql_group,
+	pattern = "sql",
+	desc = "Add sql bindings",
+	-- callback = function(_id, _event, _group, _match, buf, _file, _data)
+	callback = function(args)
+		local buf = args.buf
+
+		vim.keymap.set("v", "!+", function()
+			local text = table.concat(utils.get_visual_selection_lines(), "\n")
+			local result = vim.split(vim.fn.system({ "usql", "database_sqlite", "-c", text }), "\n")
+			utils.open_editor_temp_window(result)
+		end, {
+			desc = "Send to database",
+			remap = false,
+			buffer = buf,
+		})
+
+		vim.keymap.set("n", "!+", function()
+			local cursor_line = vim.fn.getcurpos()[2]
+			local text = table.concat(vim.api.nvim_buf_get_lines(buf, cursor_line - 1, cursor_line, false), "\n")
+			local result = vim.split(vim.fn.system({ "uql", "database_sqlite", "-c", text }), "\n")
+			utils.open_editor_temp_window(result)
+		end, {
+			desc = "Send to database",
+			remap = false,
+			buffer = buf,
+		})
+	end
+})

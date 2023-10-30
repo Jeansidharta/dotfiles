@@ -1,19 +1,14 @@
 return {
-	"jose-elias-alvarez/null-ls.nvim",
+	"nvimtools/none-ls.nvim",
 	dependencies = {
-		"jose-elias-alvarez/null-ls.nvim",
 		"lewis6991/gitsigns.nvim",
-
-		{ "lukas-reineke/lsp-format.nvim", config = true },
 	},
 	config = function()
 		local nls = require("null-ls")
 		nls.setup({
 			debounce = 150,
 			-- save_after_format = false,
-			on_attach = function(client)
-				require("lsp-format").on_attach(client)
-			end,
+			on_attach = function(client) end,
 			should_attach = function(bufnr)
 				local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
 				return filetype ~= "text-image"
@@ -53,7 +48,6 @@ return {
 						"astro",
 					},
 				}),
-				nls.builtins.formatting.rustfmt,
 				nls.builtins.formatting.terraform_fmt,
 			},
 			root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".git"),

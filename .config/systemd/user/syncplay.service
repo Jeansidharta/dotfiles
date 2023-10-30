@@ -1,0 +1,12 @@
+[Unit]
+Description=Syncplay Server
+[Service]
+; WorkingDirectory=/home/syncplay/syncplay
+; User=syncplay
+; Group=syncplay
+Type=simple
+ExecStart=/usr/bin/syncplay-server --salt Batata --port 8202 --disable-ready --disable-chat
+RestartSec=5
+Restart=always
+[Install]
+WantedBy=default.target

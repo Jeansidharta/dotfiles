@@ -6,6 +6,12 @@ function config()
 	require("gitsigns").setup({
 		signs = {
 			add = { hl = "GitSignsAdd", text = "│", numhl = "GitSignsAddNr", linehl = "GitSignsAddLn" },
+			untracked = {
+				hl = "GitSignsUntracked",
+				text = "│",
+				numhl = "GitSignsUntrackedNr",
+				linehl = "GitSignsUntrackedLn",
+			},
 			change = { hl = "GitSignsChange", text = "│", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn" },
 			delete = { hl = "GitSignsDelete", text = "_", numhl = "GitSignsDeleteNr", linehl = "GitSignsDeleteLn" },
 			topdelete = { hl = "GitSignsDelete", text = "‾", numhl = "GitSignsDeleteNr", linehl = "GitSignsDeleteLn" },

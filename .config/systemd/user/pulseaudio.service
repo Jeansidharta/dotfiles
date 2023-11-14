@@ -19,7 +19,7 @@ ConditionUser=!root
 
 [Service]
 EnvironmentFile=/home/sidharta/.config/systemd/env
-ExecStart=/usr/bin/pulseaudio --daemonize=no --log-target=journal
+ExecStart=/usr/bin/pulseaudio --daemonize=no --log-target=journal --exit-idle-time=-1
 LockPersonality=yes
 MemoryDenyWriteExecute=yes
 NoNewPrivileges=yes

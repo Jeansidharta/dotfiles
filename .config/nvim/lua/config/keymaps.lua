@@ -1,3 +1,5 @@
+local utils = require("config.utils")
+
 vim.keymap.set("n", "<Tab>", ":w<CR>", { noremap = true, desc = "Save buffer" })
 vim.keymap.set("n", "<leader>l", ":messages<CR>", { noremap = true, desc = "Show messages" })
 vim.keymap.set("n", "<leader>n", function()
@@ -9,8 +11,7 @@ vim.keymap.set("n", "<leader>s<Up>", ":split<CR><c-w>k<CR>", { noremap = true, d
 vim.keymap.set("n", "<leader>s<Left>", ":vsplit<CR><c-w>h<CR>", { noremap = true, desc = "Split left" })
 vim.keymap.set("n", "<leader>s<Right>", ":vsplit<CR>", { noremap = true, desc = "Split right" })
 
-vim.keymap.set("n", "<C-p>", "<C-o>", { noremap = true, desc = "Jump back in jumplist" })
-
+-- vim.keymap.set("n", "<C-p>", "<C-o>", { noremap = true, desc = "Jump back in jumplist" })
 
 -- vim.keymap.set("n", "p", "<Plug>(NeoclipYankForward)", { noremap = true, desc = "" })
 
@@ -72,10 +73,34 @@ vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, bufopts("Rename symbol"))
 ----------------- OTHER -------------------
 
 vim.keymap.set("n", "<leader>io", function()
-	vim.ui.select({ "markdown" }, { prompt = "Select new file type" }, function(choice)
-		vim.cmd(vim.api.nvim_replace_termcodes('normal! :vnew<CR>:set filetype=' .. choice .. '<CR>', true, true, true))
-	end)
+	local buffers = vim.api.nvim_list_bufs()
+	local commands_buf = utils.tbl_find(function(i)
+		return vim.api.nvim_buf_get_name(i) == "cmdmd://main"
+	end, buffers)
+	if not commands_buf then
+		commands_buf = vim.api.nvim_create_buf(true, false)
+		vim.api.nvim_buf_set_option(commands_buf, "filetype", "markdown")
+		vim.api.nvim_buf_set_name(commands_buf, "cmdmd://main")
+		vim.api.nvim_create_autocmd({ "BufWriteCmd", "FileWriteCmd" }, {
+			buffer = commands_buf,
+			callback = function()
+				vim.api.nvim_buf_set_option(commands_buf, "modified", false)
+			end,
+		})
+	end
+
+	local open_win = utils.tbl_find(function(i)
+		return vim.api.nvim_win_get_buf(i) == commands_buf
+	end, vim.api.nvim_list_wins())
+
+	if open_win then
+		vim.api.nvim_win_close(open_win, true)
+	else
+		vim.cmd(vim.api.nvim_replace_termcodes("normal! :vsplit<CR>", true, true, true))
+		vim.api.nvim_win_set_buf(0, commands_buf)
+	end
 end, { noremap = true, desc = "New file selector" })
+
 vim.keymap.set("n", "++", "\"zyymzo```<ESC>'z==O```<ESC>P", { noremap = true, desc = "Run current line" })
 vim.keymap.set("n", "<leader>df", function()
 	local function get_closest_diagnostic()
@@ -86,8 +111,7 @@ vim.keymap.set("n", "<leader>df", function()
 			return nil
 		elseif next == nil then
 			return prev
-		elseif prev ==
-			nil then
+		elseif prev == nil then
 			return next
 		end
 
@@ -108,8 +132,7 @@ vim.keymap.set("n", "<leader>df", function()
 		if curline ~= next.lnum and curline == prev.lnum then
 			return prev
 		elseif curline == next.lnum and curline ~= prev.lnum then
-			return
-				next
+			return next
 		elseif curline == next.lnum and curline == prev.lnum then
 			if math.abs(curcol - next.col) < math.abs(curcol - prev.col) then
 				return next
@@ -129,6 +152,19 @@ vim.keymap.set("n", "<leader>df", function()
 	if closest_diagnostic == nil then
 		vim.notify("No diagnostics available")
 	else
-		require('config.utils').open_editor_temp_window(vim.split(closest_diagnostic.message, "\n"), "text")
+		utils.open_editor_temp_window(vim.split(closest_diagnostic.message, "\n"), "text")
 	end
 end, { noremap = true, desc = "Run current line" })
+
+vim.api.nvim_create_autocmd("Filetype", {
+	pattern = "openscad",
+	callback = function()
+		vim.keymap.set("n", "<leader>x", function()
+			local filepath = vim.fn.expand("%:p")
+			local filename = vim.fn.expand("%:t")
+			local task =
+				require("overseer").new_task({ cmd = "openscad", args = { filepath }, name = "OpenSCAD " .. filename })
+			require("overseer").run_action(task, "start")
+		end)
+	end,
+})

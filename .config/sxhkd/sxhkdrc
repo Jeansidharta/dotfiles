@@ -131,3 +131,23 @@ alt + {j, i, k, l}
 	bspc node -v {-10 0, 0 -10, 0 10, 10 0 }
 alt + shift + {j, i, k, l}
 	bspc node -v {-300 0, 0 -300, 0 300, 300 0 }
+
+# Lethal Company
+mod5 + @BackSpace
+	xdotool type "switch" && xdotool key Return
+mod5 + @Super_L
+	xdotool type "view monitor" && xdotool key Return
+mod5 + @y
+	xdotool type "transmit "
+# mod5 + l; mod5 + @m
+# 	xdotool type "switch $(jq -r .player1 ~/lc.json)" && xdotool key Return
+# mod5 + l; mod5 + @comma
+# 	xdotool type "switch $(jq -r .player2 ~/lc.json)" && xdotool key Return
+# mod5 + l; mod5 + @period
+# 	xdotool type "switch $(jq -r .player3 ~/lc.json)" && xdotool key Return
+# mod5 + l; mod5 + @j
+# 	xdotool type "switch $(jq -r .player4 ~/lc.json)" && xdotool key Return
+# mod5 + l; mod5 + @u
+# 	xdotool type "ping $(jq -r .radar ~/lc.json)" && xdotool key Return
+# mod5 + l; mod5 + @i
+# 	xdotool type "flash $(jq -r .radar ~/lc.json)" && xdotool key Return

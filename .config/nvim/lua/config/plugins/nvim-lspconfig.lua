@@ -15,29 +15,17 @@ local function config()
 		end,
 
 		["rust_analyzer"] = function() end,
-		["efm"] = function()
-			require("lspconfig")["efm"].setup({
-				init_options = {
-					documentFormatting = true,
-					documentRangeFormatting = true,
-				},
-				capabilities,
-				settings = {
-					rootMarkers = { ".git/" },
-					languages = {
-						markdown = {
-							vim.tbl_extend("force", require("efmls-configs.formatters.prettier_d"),
-								{ requireMarker = false }),
-						},
-						json = {
-							vim.tbl_extend("force", require("efmls-configs.linters.jq"), { requireMarker = false }),
-						},
-					},
-				},
-				filetypes = { "markdown", "json" },
-				single_file_support = true,
-			})
-		end,
+	})
+
+	require("lspconfig").gleam.setup({})
+
+	require("lspconfig").openscad_ls.setup({
+		cmd = {
+			"/home/sidharta/projects/git/openscad-LSP/target/release/openscad-lsp",
+			"--stdio",
+			"--fmt-exe",
+			"asdfg",
+		},
 	})
 end
 
@@ -46,21 +34,10 @@ return {
 	lazy = false,
 	config = config,
 	dependencies = {
-		{ "creativenull/efmls-configs-nvim" },
-		-- {
-		-- 	"folke/neodev.nvim",
-		-- 	config = {
-		-- 		override = function()
-		-- 			return true
-		-- 		end,
-		-- 	}
-		-- },
-		{ "williamboman/mason.nvim",        config = true },
+		{ "williamboman/mason.nvim", config = true },
 		{
 			"williamboman/mason-lspconfig.nvim",
-			config = {
-				-- ensure_installed = { "lua_ls", "rust_analyzer" },
-			},
+			config = {},
 		},
 	},
 }

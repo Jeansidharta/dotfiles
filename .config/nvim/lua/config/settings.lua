@@ -1,3 +1,7 @@
+-- vim.lsp.set_log_level 'debug'
+-- require('vim.lsp.log').set_format_func(vim.inspect)
+
+
 local utils = require("config.utils")
 vim.g.mapleader = " "
 vim.opt.equalprg = "sh"

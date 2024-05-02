@@ -1,7 +1,7 @@
 local function open_editor_temp_window(initial_lines, filetype)
 	local temp_buffer = vim.api.nvim_create_buf(false, true)
 	vim.api.nvim_buf_set_lines(temp_buffer, 0, -1, false, initial_lines)
-	vim.api.nvim_buf_set_option(temp_buffer, 'filetype', filetype or '')
+	vim.api.nvim_buf_set_option(temp_buffer, "filetype", filetype or "")
 	-- Requires a 'BufWriteCmd' or "FileWriteCmd" autocmd to write
 	vim.api.nvim_buf_set_option(temp_buffer, "buftype", "acwrite")
 	-- Allows the user to call :write
@@ -90,13 +90,40 @@ end
 
 local function get_visual_selection_text()
 	local visual_pos = get_visual_selection_position()
-	return vim.api.nvim_buf_get_text(visual_pos.buf, visual_pos.start[1] - 1, visual_pos.start[2] - 1,
+	return vim.api.nvim_buf_get_text(
+		visual_pos.buf,
+		visual_pos.start[1] - 1,
+		visual_pos.start[2] - 1,
 		visual_pos.finish[1] - 1,
-		visual_pos.finish[2], {})
+		visual_pos.finish[2],
+		{}
+	)
+end
+
+local function find_project_root()
+	local buf_path = vim.fs.dirname(vim.api.nvim_buf_get_name(0))
+end
+
+local function find_project_root()
+	local buf_path = vim.fs.dirname(vim.api.nvim_buf_get_name(0))
+	return vim.fs.dirname(
+		vim.fs.find(".git/", { upward = true, path = buf_path })[1] or vim.fs.find(".git", { upward = true })[1] or "."
+	)
+end
+
+local function tbl_find(f, l)
+	for _, v in ipairs(l) do
+		if f(v) then
+			return v
+		end
+	end
+	return nil
 end
 
 return {
 	open_editor_temp_window = open_editor_temp_window,
 	get_visual_selection_text = get_visual_selection_text,
-	get_visual_selection_lines = get_visual_selection_lines
+	get_visual_selection_lines = get_visual_selection_lines,
+	find_project_root = find_project_root,
+	tbl_find = tbl_find,
 }

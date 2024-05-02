@@ -17,6 +17,12 @@ return {
 					click = "v:lua.ScSa",
 				},
 				{
+					text = {
+						builtin.lnumfunc,
+					},
+					click = "v:lua.ScLa",
+				},
+				{
 					sign = {
 						name = { ".*" },
 						maxwidth = 1,
@@ -26,13 +32,11 @@ return {
 					},
 					click = "v:lua.ScSa",
 				},
-				{ text = {
-					builtin.lnumfunc,
-				}, click = "v:lua.ScLa" },
-				{ text = {
-					builtin.foldfunc,
-					auto = true,
-				}, click = "v:lua.ScFa", hl = "" },
+				{
+					text = { "%s" },
+					click = "v:lua.ScSa",
+					condition = { true, builtin.not_empty },
+				},
 			},
 		})
 	end,

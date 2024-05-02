@@ -1,29 +1,10 @@
 function config()
 	local ls = require("luasnip")
+	local utils = require("config.utils")
 	local s = ls.snippet
-	local sn = ls.snippet_node
-	local isn = ls.indent_snippet_node
 	local t = ls.text_node
 	local i = ls.insert_node
-	local f = ls.function_node
-	local c = ls.choice_node
-	local d = ls.dynamic_node
-	local r = ls.restore_node
-	local events = require("luasnip.util.events")
-	local ai = require("luasnip.nodes.absolute_indexer")
-	local extras = require("luasnip.extras")
-	local l = extras.lambda
-	local rep = extras.rep
-	local p = extras.partial
-	local m = extras.match
-	local n = extras.nonempty
-	local dl = extras.dynamic_lambda
-	local fmt = require("luasnip.extras.fmt").fmt
-	local fmta = require("luasnip.extras.fmt").fmta
-	local conds = require("luasnip.extras.expand_conditions")
-	local postfix = require("luasnip.extras.postfix").postfix
 	local types = require("luasnip.util.types")
-	local parse = require("luasnip.util.parser").parse_snippet
 
 	ls.config.set_config({
 		history = true,
@@ -43,91 +24,60 @@ function config()
 		enable_autosnippets = true,
 	})
 
-	-- vim.keymap.set({ "i", "v" }, "<c-k>", function()
-	-- 	if ls.expand_or_jumpable() then
-	-- 		ls.expand_or_jump()
-	-- 	end
-	-- end)
-	--
-	ls.add_snippets("markdown", {
-		s("`", {
-			t({ '```' }),
-			i(1),
-			t({ "", "", '```' })
-		})
-	})
-	ls.add_snippets("rust", {
-		s("print", {
-			-- t {'println!("'}, i(1), t {' {:?}", '}, i(0), t {');'}}),
-			t({ 'println!("' }),
-			i(1),
-			t({ " {" }),
-			i(0),
-			t({ ':?}");' }),
-		}),
+	vim.api.nvim_create_autocmd("Filetype", {
+		pattern = "markdown",
+		callback = function(_ev)
+			local project_root = require("config.utils").find_project_root()
+			if not project_root then
+				vim.print("Project root not found")
+				return
+			end
+			vim.print("Project root is " .. project_root)
 
-		s("struct", {
-			t({ "#[derive(Debug)]", "" }),
-			t({ "struct " }),
-			i(1),
-			t({ " {", "" }),
-			i(0),
-			t({ "}", "" }),
-		}),
+			local database_path = vim.fs.find(function(name)
+				return name:match(".sqlite3$")
+			end, { path = project_root })[1]
 
-		s("test", {
-			t({ "#[test]", "" }),
-			t({ "fn " }),
-			i(1),
-			t({ "() {", "" }),
-			t({ "	assert" }),
-			i(0),
-			t({ "", "" }),
-			t({ "}" }),
-		}),
+			if not database_path then
+				vim.print("No database found")
+				return
+			end
 
-		s("testcfg", {
-			t({ "#[cfg(test)]", "" }),
-			t({ "mod tests {", "" }),
-			t({ "	use super::*;", "" }),
-			t({ "	use pretty_assertions::assert_eq;", "" }),
-			t({ "" }),
-			t({ "	#[test]", "" }),
-			t({ "	fn " }),
-			i(0),
-			t({ "() {", "" }),
-			t({ "		assert", "" }),
-			t({ "	}", "" }),
-			t({ "}" }),
-		}),
+			local available_snipts = ls.available()
+
+			if
+				available_snipts.markdown
+				and utils.tbl_find(function(snip)
+					return snip.name == "`usql"
+				end, available_snipts.markdown)
+			then
+				return
+			end
+
+			ls.add_snippets("markdown", {
+				s("`usql", {
+					t({ "```usql " .. database_path }),
+					i(1),
+					t({ "", "", "```" }),
+				}),
+			})
+		end,
 	})
 
-	ls.add_snippets("vue", {
-		s("newfile", {
-			t({
-				"<template>",
-				"</template>",
-				"<script>",
-				"",
-				"export default {",
-				"	props: [],",
-				"	components: {",
-				"	},",
-				"	data: () => ({",
-				"	}),",
-				"	methods: {",
-				"	},",
-				"	computed: {",
-				"	},",
-				"	watch: {",
-				"	}",
-				"}",
-				"</script>",
-				'<style lang="scss" scoped>',
-				"</style>",
-			}),
-		}),
-	})
+	require("luasnip.loaders.from_snipmate").lazy_load()
+
+	vim.keymap.set("n", "<C-,>", function()
+		ls.jump(1)
+	end, { desc = "LuaSnip jump to next slot" })
+	vim.keymap.set("i", "<C-,>", function()
+		ls.jump(1)
+	end, { desc = "LuaSnip jump to next slot" })
+	vim.keymap.set("n", "<C-.>", function()
+		ls.jump(-1)
+	end, { desc = "LuaSnip jump to previous slot" })
+	vim.keymap.set("i", "<C-.>", function()
+		ls.jump(-1)
+	end, { desc = "LuaSnip jump to previous slot" })
 end
 
 return {

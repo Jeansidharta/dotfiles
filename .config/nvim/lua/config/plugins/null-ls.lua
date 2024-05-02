@@ -1,5 +1,6 @@
 return {
 	"nvimtools/none-ls.nvim",
+	dev = true,
 	dependencies = {
 		"lewis6991/gitsigns.nvim",
 	},
@@ -8,7 +9,11 @@ return {
 		nls.setup({
 			debounce = 150,
 			-- save_after_format = false,
-			on_attach = function(client) end,
+			on_attach = function(client)
+				-- vim.keymap.set("n", "<S-Tab>", function()
+				-- 	vim.lsp.buf.format({ id = client.id })
+				-- end, { noremap = true, desc = "Format buffer" })
+			end,
 			should_attach = function(bufnr)
 				local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
 				return filetype ~= "text-image"
@@ -17,12 +22,23 @@ return {
 				nls.builtins.code_actions.gitsigns,
 				-- Lua
 				nls.builtins.formatting.stylua,
+				nls.builtins.formatting.gleam_format,
+				nls.builtins.formatting.leptosfmt.with({
+					generator_opts = {
+						command = "leptosfmt",
+						args = { "--quiet", "--stdin" },
+						to_stdin = true,
+					},
+					condition = function(utils)
+						return utils.root_has_file({ "leptosfmt.toml" })
+					end,
+				}),
+				nls.builtins.formatting.terraform_fmt,
 				nls.builtins.diagnostics.selene.with({
 					condition = function(utils)
 						return utils.root_has_file({ "selene.toml" })
 					end,
 				}),
-				-- Others
 				nls.builtins.formatting.prettierd.with({
 					env = {
 						PRETTIERD_DEFAULT_CONFIG = "/home/sidharta/.config/prettier/.prettierrc.json",
@@ -48,9 +64,7 @@ return {
 						"astro",
 					},
 				}),
-				nls.builtins.formatting.terraform_fmt,
 			},
-			root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".git"),
 		})
 	end,
 	lazy = false,

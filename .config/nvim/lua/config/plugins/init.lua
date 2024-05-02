@@ -25,18 +25,18 @@ return {
 			vim.notify = require("notify")
 		end,
 	},
-	{ "j-hui/fidget.nvim",            config = true,        event = "BufEnter", tag = "legacy" },
-	{ "kylechui/nvim-surround",       config = true,        event = "VeryLazy" },
+	-- { "kylechui/nvim-surround",       config = true,        event = "VeryLazy" },
 	{
 		"numToStr/Comment.nvim",
+		dev = true,
 		config = true,
 		keys = {
 			"gcc",
 			"gbc",
-		}
+		},
 	},
-	{ "tpope/vim-fugitive",        event = "BufEnter" },
-	{ "akinsho/git-conflict.nvim", config = true,     event = "BufReadPre" },
+	{ "tpope/vim-fugitive",           event = "BufEnter" },
+	{ "akinsho/git-conflict.nvim",    config = true,        event = "BufReadPre" },
 	{
 		"glts/vim-radical",
 		dependencies = {
@@ -88,7 +88,7 @@ return {
 		event = "VeryLazy",
 		config = {
 			useDefaultKeymaps = true,
-		}
+		},
 	},
 	{
 		"stevearc/oil.nvim",
@@ -101,6 +101,9 @@ return {
 			},
 			view_options = {
 				show_hidden = true,
+				is_always_hidden = function(name, bufnr)
+					return name == ".."
+				end,
 			},
 		},
 		lazy = false,
@@ -135,12 +138,10 @@ return {
 							checkOnSave = {
 								enable = true,
 								command = "clippy",
-								-- allTargets = false,
 							},
 							cargo = {
 								allFeatures = true,
 							},
-							diagnostics = { experimental = { enable } },
 							hover = { actions = { references = { enable = true } } },
 							imports = { granularity = { enforce = true } },
 							inlayHints = {
@@ -155,7 +156,6 @@ return {
 						},
 					},
 					on_attach = function(_, bufnr)
-						vim.print("Attached")
 						-- Hover actions
 						vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
 						-- Code action groups
@@ -223,17 +223,11 @@ return {
 		config = function()
 			require("zk").setup({
 				picker = "telescope",
-
 				lsp = {
-					-- `config` is passed to `vim.lsp.start_client(config)`
 					config = {
 						cmd = { "zk", "lsp" },
 						name = "zk",
-						-- on_attach = ...
-						-- etc, see `:h vim.lsp.start_client()`
 					},
-
-					-- automatically attach buffers in a zk notebook that match the given filetypes
 					auto_attach = {
 						enabled = true,
 						filetypes = { "markdown" },
@@ -242,7 +236,6 @@ return {
 			})
 		end,
 	},
-	-- { "lukas-reineke/virt-column.nvim", lazy = false, config = { char = "▏" } },
 	{ "elkowar/yuck.vim",                    lazy = false },
 	{
 		"gpanders/nvim-parinfer",
@@ -282,12 +275,66 @@ return {
 		},
 	},
 	{
-		'kwkarlwang/bufjump.nvim',
+		"kwkarlwang/bufjump.nvim",
+		dev = true,
 		lazy = false,
 		config = {
 			forward = "<C-i>",
 			backward = "<C-o>",
-			on_success = nil
+			backwardInBuffer = "<C-p>",
+			forwardInBuffer = "<C-l>",
+			on_success = nil,
 		},
-	}
+	},
+	{
+		"vxpm/ferris.nvim",
+		opts = {
+			create_commands = true,
+			url_handler = "xdg-open",
+		},
+	},
+	{
+		"davidgranstrom/scnvim",
+		lazy = false,
+		config = function()
+			local scnvim = require("scnvim")
+			local map = scnvim.map
+			local map_expr = scnvim.map_expr
+			scnvim.setup({
+				keymaps = {
+					["<leader>il"] = map("editor.send_line"),
+					["<leader>i<CR>"] = {
+						map("editor.send_block"),
+						map("editor.send_selection", "x"),
+					},
+					["<leader>it"] = map("postwin.toggle"),
+					["<leader>i<C-t>"] = map("postwin.clear"),
+					-- ["<C-k>"] = map("signature.show", { "n", "i" }),
+					["<leader>i;"] = map("sclang.hard_stop"),
+					["<leader>is"] = map(function()
+						scnvim.start()
+						scnvim.send("s.boot")
+					end),
+					-- ["<leader>ik"] = map("sclang.recompile"),
+					-- ["<leader>ib"] = map_expr("s.boot"),
+					-- ["<F2>"] = map_expr("s.meter"),
+				},
+				editor = {
+					highlight = {
+						color = "IncSearch",
+					},
+				},
+				postwin = {
+					float = {
+						-- enabled = true,
+					},
+				},
+			})
+		end,
+	},
+	{
+		"j-hui/fidget.nvim",
+		lazy = false,
+		opts = {},
+	},
 }

@@ -1,14 +1,12 @@
 return {
 	"lewis6991/hover.nvim",
+	commit = "24369e8595736077e30b3ca5fc233f44abeccb8b",
 	config = {
 		init = function()
 			-- Require providers
 			require("hover.providers.lsp")
 			require("hover.providers.gh")
 			require("hover.providers.gh_user")
-			-- require('hover.providers.jira')
-			require("hover.providers.man")
-			require("hover.providers.dictionary")
 		end,
 		preview_opts = {
 			border = nil,

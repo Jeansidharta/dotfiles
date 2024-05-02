@@ -7,6 +7,9 @@ Color 3 - #0abdc6 # Cyan
 Color 4 - #133e7c # Blue
 Color 5 - #091833 # Dark Blue
 
+# #ff9500 - Orange
+# #15ff00 - Green
+
 # Colors copied from this project:
 # https://github.com/Roboron3042/Cyberpunk-Neon/blob/master/terminal/terminal-palette
 *background:  #000b1e

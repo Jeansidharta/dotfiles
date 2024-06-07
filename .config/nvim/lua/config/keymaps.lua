@@ -27,6 +27,9 @@ vim.keymap.set("n", "<leader>dn", vim.diagnostic.goto_next, { noremap = true, de
 vim.keymap.set("n", "<leader>dN", vim.diagnostic.goto_prev, { noremap = true, desc = "Go to prev diagnostics" })
 vim.keymap.set("n", "<leader>do", vim.diagnostic.open_float, { noremap = true, desc = "Open diagnostics float" })
 vim.keymap.set("n", "<leader>dq", vim.diagnostic.setloclist, { noremap = true, desc = "Open diagnostics float" })
+vim.keymap.set("n", "<leader>di", function()
+	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 }), { bufnr = 0 })
+end, { noremap = true, desc = "Toggle inlay hints" })
 
 -------------- QUICK FIX --------------------------
 vim.keymap.set("n", "<leader>qt", function()

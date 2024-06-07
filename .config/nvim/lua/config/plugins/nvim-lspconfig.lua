@@ -1,3 +1,17 @@
+vim.api.nvim_create_autocmd("LspAttach", {
+	group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+	callback = function(ev)
+		local bufnr = ev.buf
+		local client = vim.lsp.get_client_by_id(ev.data.client_id)
+		if not client then
+			return
+		end
+		if client.server_capabilities.inlayHintProvider then
+			vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+		end
+	end,
+})
+
 local function config()
 	local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
@@ -15,6 +29,23 @@ local function config()
 		end,
 
 		["rust_analyzer"] = function() end,
+		["tsserver"] = function()
+			require("lspconfig").tsserver.setup({
+				init_options = {
+					preferences = {
+						interactiveInlayHints = true,
+						includeInlayParameterNameHints = "all",
+						includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+						includeInlayFunctionParameterTypeHints = true,
+						includeInlayVariableTypeHints = true,
+						includeInlayPropertyDeclarationTypeHints = true,
+						includeInlayFunctionLikeReturnTypeHints = true,
+						includeInlayEnumMemberValueHints = true,
+						importModuleSpecifierPreference = "non-relative",
+					},
+				},
+			})
+		end,
 	})
 
 	require("lspconfig").gleam.setup({})
